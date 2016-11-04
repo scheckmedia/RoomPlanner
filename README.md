@@ -1,4 +1,4 @@
 # RoomPlanner
 
-### Target: iOS 9+
-### Language: Swift
+* Target: iOS 9+
+* Language: Swift
