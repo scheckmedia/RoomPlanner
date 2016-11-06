@@ -12,7 +12,7 @@ import GLMatrix
 
 class GlViewController: GLKViewController {
     
-    var plane : Plane?
+    var planes : [Plane] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,19 @@ class GlViewController: GLKViewController {
         rv.backgroundColor = UIColor.clear
         EAGLContext.setCurrent(rv.context)
         
-        self.plane = Plane(pos: Mat4.Identity())
+        var posP1 = Mat4.Identity()
+        var posP2 = Mat4.Identity()
+        
+        posP1.scale(by: 0.4)
+        
+        posP2.scale(by: 0.3)
+        posP2.translate(by: Vec3(v: (0.3, -0.1, 0.0)))
+        
+        planes.append( Plane(pos: posP2) )
+        planes.append( Plane(pos: posP1) )
+        planes[0].color = Vec3(v: (GLfloat(0), GLfloat(0), GLfloat(1)))
+        planes[1].color = Vec3(v: (GLfloat(1), GLfloat(0), GLfloat(0)))
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +51,10 @@ class GlViewController: GLKViewController {
         glClearColor(0.0, 0.0, 0.0, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
         
-        plane!.render()
+        for p in planes {
+            p.render()
+        }
+        
         
         self.setNeedsFocusUpdate()
     }

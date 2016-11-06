@@ -26,6 +26,7 @@ class Plane: Renderable {
     var program : GLuint?
     var posid: GLuint = GLuint()
     var uvid:GLuint = GLuint()
+    public var color = Vec3(v: (GLfloat(0), GLfloat(0), GLfloat(0)))
     
     private let vertices : [Vertex] = [
             Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0)),
@@ -81,7 +82,10 @@ class Plane: Renderable {
             glUseProgram(self.program!)
         }
         
-        print("call render:")
+        
+        glUniform3f(GLint(glGetUniformLocation(program!, "color")), color[0], color[1], color[2])
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), modelPosition)
+        
         glBindVertexArray(vao)
         glDrawArrays(GLenum(GL_TRIANGLES), 0, 6)
         glBindVertexArray(0)
