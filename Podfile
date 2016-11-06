@@ -12,4 +12,6 @@ target 'RoomPlanner' do
   # Pods for RoomPlanner
   #
   pod 'GLMatrix'
+  pod 'OpenCV'
+
 end
