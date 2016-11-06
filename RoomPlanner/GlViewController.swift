@@ -7,8 +7,13 @@
 //
 
 import GLKit
+import GLMatrix
 
-class SecondViewController: GLKViewController {
+
+class GlViewController: GLKViewController {
+    
+    var plane : Plane?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,26 +26,21 @@ class SecondViewController: GLKViewController {
         rv.backgroundColor = UIColor.clear
         EAGLContext.setCurrent(rv.context)
         
+        self.plane = Plane(pos: Mat4.Identity())
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        let r: Float = Float(arc4random_uniform(10)) / 10.0
-        let g: Float = Float(arc4random_uniform(10)) / 10.0
-        let b: Float = Float(arc4random_uniform(10)) / 10.0
-        glClearColor(r, g, b, 1.0)
+        glClearColor(0.0, 0.0, 0.0, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
-        print("call")
+        
+        plane!.render()
         
         self.setNeedsFocusUpdate()
     }
 }
-
-class RenderView {
-  
-}
-

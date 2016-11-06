@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D231DCCD4B4005A727A /* AppDelegate.swift */; };
 		27AF3D261DCCD4B4005A727A /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D251DCCD4B4005A727A /* FirstViewController.swift */; };
-		27AF3D281DCCD4B4005A727A /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D271DCCD4B4005A727A /* SecondViewController.swift */; };
+		27AF3D281DCCD4B4005A727A /* GlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D271DCCD4B4005A727A /* GlViewController.swift */; };
 		27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D291DCCD4B4005A727A /* Main.storyboard */; };
 		27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */; };
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
+		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
+		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
+		D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615271DCF74FF00E9C726 /* plane.fsh */; };
 		D2E079FB1DCF30B5002C38E1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */; };
 		D2E079FD1DCF3111002C38E1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E079FC1DCF3111002C38E1 /* GLKit.framework */; };
-		D2E079FF1DCF46CF002C38E1 /* RenderableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E079FE1DCF46CF002C38E1 /* RenderableObject.swift */; };
+		D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E079FE1DCF46CF002C38E1 /* Renderable.swift */; };
 		F55BA708D70586F78A496FC2 /* Pods_RoomPlanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 908915E69450BA76D6F9AD24 /* Pods_RoomPlanner.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,16 +27,19 @@
 		27AF3D201DCCD4B4005A727A /* RoomPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AF3D231DCCD4B4005A727A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27AF3D251DCCD4B4005A727A /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		27AF3D271DCCD4B4005A727A /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		27AF3D271DCCD4B4005A727A /* GlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlViewController.swift; sourceTree = "<group>"; };
 		27AF3D2A1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AF3D2F1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27AF3D311DCCD4B4005A727A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		908915E69450BA76D6F9AD24 /* Pods_RoomPlanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RoomPlanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.release.xcconfig"; sourceTree = "<group>"; };
+		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
+		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
+		D2D615271DCF74FF00E9C726 /* plane.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = plane.fsh; sourceTree = "<group>"; };
 		D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2E079FC1DCF3111002C38E1 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		D2E079FE1DCF46CF002C38E1 /* RenderableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderableObject.swift; sourceTree = "<group>"; };
+		D2E079FE1DCF46CF002C38E1 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,14 +77,16 @@
 		27AF3D221DCCD4B4005A727A /* RoomPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				D2D615241DCF742D00E9C726 /* Shader */,
 				27AF3D231DCCD4B4005A727A /* AppDelegate.swift */,
 				27AF3D251DCCD4B4005A727A /* FirstViewController.swift */,
-				27AF3D271DCCD4B4005A727A /* SecondViewController.swift */,
+				27AF3D271DCCD4B4005A727A /* GlViewController.swift */,
 				27AF3D291DCCD4B4005A727A /* Main.storyboard */,
 				27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */,
 				27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */,
 				27AF3D311DCCD4B4005A727A /* Info.plist */,
-				D2E079FE1DCF46CF002C38E1 /* RenderableObject.swift */,
+				D2E079FE1DCF46CF002C38E1 /* Renderable.swift */,
+				D24868ED1DCF6A2900F74375 /* GLHelper.swift */,
 			);
 			path = RoomPlanner;
 			sourceTree = "<group>";
@@ -90,6 +98,15 @@
 				93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D2D615241DCF742D00E9C726 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				D2D615251DCF74B100E9C726 /* plane.vsh */,
+				D2D615271DCF74FF00E9C726 /* plane.fsh */,
+			);
+			name = Shader;
 			sourceTree = "<group>";
 		};
 		D2E079F91DCF30B4002C38E1 /* Frameworks */ = {
@@ -165,8 +182,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */,
 				27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
+				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
 				27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,8 +245,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2E079FF1DCF46CF002C38E1 /* RenderableObject.swift in Sources */,
-				27AF3D281DCCD4B4005A727A /* SecondViewController.swift in Sources */,
+				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
+				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
+				27AF3D281DCCD4B4005A727A /* GlViewController.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
 				27AF3D261DCCD4B4005A727A /* FirstViewController.swift in Sources */,
 			);
