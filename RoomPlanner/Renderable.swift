@@ -24,6 +24,9 @@ class Plane: Renderable {
     var vao  = GLuint()
     var vbo = GLuint()
     var program : GLuint?
+    var posid: GLuint = GLuint()
+    var uvid:GLuint = GLuint()
+    
     private let vertices : [Vertex] = [
             Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0)),
             Vertex(position: (x:  0.5, y:  0.5, z: 0), uv: (x: 1.0, y: 1.0)),
@@ -37,11 +40,15 @@ class Plane: Renderable {
     init(pos:Mat4) {
         self.modelPosition = pos
         self.program = GLHelper.linkProgram(vertexShader: "plane.vsh", fragmentShader: "plane.fsh")
+        self.posid = GLuint(glGetAttribLocation(program!, "position"))
+        self.uvid = GLuint(glGetAttribLocation(program!, "uv_coord"))
         
         glGenVertexArrays(1, &vao)
         glBindVertexArray(vao)
         
         glGenBuffers(1, &vbo)
+        
+        createData()
     }
     
     deinit {
@@ -53,19 +60,20 @@ class Plane: Renderable {
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo)
         glBufferData(GLenum(GL_ARRAY_BUFFER),  vertices.size(), vertices, GLenum(GL_STATIC_DRAW))
         
+        glEnableVertexAttribArray(posid)
+        glEnableVertexAttribArray(uvid)
         
-        glEnableVertexAttribArray(0)
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo)
-        glVertexAttribPointer(0, 3, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, nil)
-        glVertexAttribPointer(1, 2, GLenum(GL_FLOAT), GLboolean(UInt8(GL_FALSE)), 0, BUFFER_OFFSET(n: 12))
+        glVertexAttribPointer(posid, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<Vertex>.size), nil)
+        glVertexAttribPointer(uvid, 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<Vertex>.size), BUFFER_OFFSET(n: 3 * MemoryLayout<GLfloat>.size))
+        
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), 0)
         glBindVertexArray(0)
     }
     
     func BUFFER_OFFSET(n: Int) -> UnsafeRawPointer {
-        let ptr: UnsafeRawPointer? = nil
-        return ptr! + n
+        return UnsafeRawPointer(bitPattern: n)!
     }
     
     internal func render() {
@@ -73,6 +81,7 @@ class Plane: Renderable {
             glUseProgram(self.program!)
         }
         
+        print("call render:")
         glBindVertexArray(vao)
         glDrawArrays(GLenum(GL_TRIANGLES), 0, 6)
         glBindVertexArray(0)
