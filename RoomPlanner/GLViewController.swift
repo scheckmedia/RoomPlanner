@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  GLViewController.swift
 //  RoomPlanner
 //
 //  Created by Michél Neumann on 04/11/2016.
@@ -9,8 +9,7 @@
 import GLKit
 import GLMatrix
 
-
-class GlViewController: GLKViewController {
+class GLViewController: GLKViewController {
     
     var planes : [Plane] = []
         

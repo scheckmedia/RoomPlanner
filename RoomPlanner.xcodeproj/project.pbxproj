@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27016C421DD12420004D98C3 /* OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27016C411DD12420004D98C3 /* OpenCV.mm */; };
 		27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D231DCCD4B4005A727A /* AppDelegate.swift */; };
-		27AF3D261DCCD4B4005A727A /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D251DCCD4B4005A727A /* FirstViewController.swift */; };
-		27AF3D281DCCD4B4005A727A /* GlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D271DCCD4B4005A727A /* GlViewController.swift */; };
+		27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D251DCCD4B4005A727A /* CameraViewController.swift */; };
+		27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D271DCCD4B4005A727A /* GLViewController.swift */; };
 		27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D291DCCD4B4005A727A /* Main.storyboard */; };
 		27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */; };
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
@@ -24,10 +25,13 @@
 
 /* Begin PBXFileReference section */
 		152F717A71497D29B914BE78 /* Pods-RoomPlanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.debug.xcconfig"; sourceTree = "<group>"; };
+		27016C3F1DD12420004D98C3 /* RoomPlanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RoomPlanner-Bridging-Header.h"; sourceTree = "<group>"; };
+		27016C401DD12420004D98C3 /* OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCV.h; sourceTree = "<group>"; };
+		27016C411DD12420004D98C3 /* OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCV.mm; sourceTree = "<group>"; };
 		27AF3D201DCCD4B4005A727A /* RoomPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AF3D231DCCD4B4005A727A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		27AF3D251DCCD4B4005A727A /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		27AF3D271DCCD4B4005A727A /* GlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlViewController.swift; sourceTree = "<group>"; };
+		27AF3D251DCCD4B4005A727A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		27AF3D271DCCD4B4005A727A /* GLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLViewController.swift; sourceTree = "<group>"; };
 		27AF3D2A1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AF3D2F1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27016C431DD12623004D98C3 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				27AF3D271DCCD4B4005A727A /* GLViewController.swift */,
+				27AF3D251DCCD4B4005A727A /* CameraViewController.swift */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
 		27AF3D171DCCD4B4005A727A = {
 			isa = PBXGroup;
 			children = (
@@ -77,10 +90,10 @@
 		27AF3D221DCCD4B4005A727A /* RoomPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				27016C431DD12623004D98C3 /* View Controller */,
+				27DCD54B1DD122E3002F69B5 /* OpenCV */,
 				D2D615241DCF742D00E9C726 /* Shader */,
 				27AF3D231DCCD4B4005A727A /* AppDelegate.swift */,
-				27AF3D251DCCD4B4005A727A /* FirstViewController.swift */,
-				27AF3D271DCCD4B4005A727A /* GlViewController.swift */,
 				27AF3D291DCCD4B4005A727A /* Main.storyboard */,
 				27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */,
 				27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */,
@@ -89,6 +102,16 @@
 				D24868ED1DCF6A2900F74375 /* GLHelper.swift */,
 			);
 			path = RoomPlanner;
+			sourceTree = "<group>";
+		};
+		27DCD54B1DD122E3002F69B5 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				27016C401DD12420004D98C3 /* OpenCV.h */,
+				27016C411DD12420004D98C3 /* OpenCV.mm */,
+				27016C3F1DD12420004D98C3 /* RoomPlanner-Bridging-Header.h */,
+			);
+			name = OpenCV;
 			sourceTree = "<group>";
 		};
 		6A7E9F1B027C229BD1220E52 /* Pods */ = {
@@ -155,6 +178,7 @@
 					27AF3D1F1DCCD4B4005A727A = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 3LPDW8B3J9;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -247,9 +271,10 @@
 			files = (
 				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
-				27AF3D281DCCD4B4005A727A /* GlViewController.swift in Sources */,
+				27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
-				27AF3D261DCCD4B4005A727A /* FirstViewController.swift in Sources */,
+				27016C421DD12420004D98C3 /* OpenCV.mm in Sources */,
+				27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,12 +396,15 @@
 			baseConfigurationReference = 152F717A71497D29B914BE78 /* Pods-RoomPlanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3LPDW8B3J9;
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoomPlanner/RoomPlanner-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -386,12 +414,14 @@
 			baseConfigurationReference = 93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3LPDW8B3J9;
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RoomPlanner/RoomPlanner-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

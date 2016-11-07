@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  CameraViewController.swift
 //  RoomPlanner
 //
 //  Created by Michél Neumann on 04/11/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
