@@ -23,7 +23,9 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         
         // Set session quality to highest resolution
-        session.sessionPreset = AVCaptureSessionPresetPhoto
+        #if (!arch(i386)  && !arch(x86_64)) && !os(iOS)
+            session.sessionPreset = AVCaptureSessionPresetPhoto
+        #endif
         
         // Fetch all available devices and return the back-facing camera only
         for device in (AVCaptureDevice.devices() as! [AVCaptureDevice]) {
@@ -35,16 +37,17 @@ class CameraViewController: UIViewController {
         // WTF Error Handling?!
         do {
             session.addInput(try AVCaptureDeviceInput(device: self.device))
+            // Attach camera preview to this view controller (for testing)
+            self.preview = AVCaptureVideoPreviewLayer(session: self.session)
+            self.view.layer.addSublayer(self.preview!)
+            self.preview?.frame = self.view.layer.frame
+            
+            self.session.startRunning()
         } catch _ {
             print("Could not connect to AVCaptureDevice!")
         }
         
-        // Attach camera preview to this view controller (for testing)
-        self.preview = AVCaptureVideoPreviewLayer(session: self.session)
-        self.view.layer.addSublayer(self.preview!)
-        self.preview?.frame = self.view.layer.frame
-        
-        self.session.startRunning()
+       
     }
 
     override func didReceiveMemoryWarning() {
