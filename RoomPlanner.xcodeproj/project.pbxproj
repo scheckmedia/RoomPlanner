@@ -14,6 +14,8 @@
 		27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D291DCCD4B4005A727A /* Main.storyboard */; };
 		27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */; };
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
+		27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */; };
+		27FD09411DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
 		D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28AE39F1DD25B64009E8CDD /* wall.jpg */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -37,6 +39,8 @@
 		27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AF3D2F1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27AF3D311DCCD4B4005A727A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStreamController.swift; sourceTree = "<group>"; };
+		27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStreamControllerDelegate.swift; sourceTree = "<group>"; };
 		908915E69450BA76D6F9AD24 /* Pods_RoomPlanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RoomPlanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.release.xcconfig"; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				27AF3D311DCCD4B4005A727A /* Info.plist */,
 				D2E079FE1DCF46CF002C38E1 /* Renderable.swift */,
 				D24868ED1DCF6A2900F74375 /* GLHelper.swift */,
+				27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */,
+				27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */,
 			);
 			path = RoomPlanner;
 			sourceTree = "<group>";
@@ -279,7 +285,9 @@
 				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
 				27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */,
+				27FD09411DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
+				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
 				27016C421DD12420004D98C3 /* OpenCV.mm in Sources */,
 				27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */,
 			);

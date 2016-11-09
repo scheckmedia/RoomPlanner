@@ -15,34 +15,19 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
     
-    private let session = AVCaptureSession()
-    private var device: AVCaptureDevice?
+    private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set session quality to highest resolution
-        #if (!arch(i386) && !arch(x86_64)) && !os(iOS)
-            self.session.sessionPreset = AVCaptureSessionPresetPhoto
-            self.device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) as AVCaptureDevice
-        #endif
-        
-        // WTF Error Handling?!
-        do {
-            session.addInput(try AVCaptureDeviceInput(device: self.device))
-            
-            // Attach camera preview to this view controller (for testing)
-            self.preview = AVCaptureVideoPreviewLayer(session: self.session)
+        // Execute only on real iOS devices
+        if(TARGET_OS_IPHONE != 0 && TARGET_IPHONE_SIMULATOR == 0) {
+            self.cameraStream = CameraStreamController()
+            self.preview = AVCaptureVideoPreviewLayer(session: self.cameraStream?.session)
             self.view.layer.addSublayer(self.preview!)
             self.preview?.frame = self.view.layer.frame
-            
-            self.session.startRunning()
-            
-        } catch _ {
-            print("Could not connect to AVCaptureDevice!")
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
