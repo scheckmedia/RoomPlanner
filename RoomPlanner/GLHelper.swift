@@ -7,10 +7,24 @@
 //
 import Foundation
 import GLKit
+import GLMatrix
 
 extension Array {
     func size () -> Int {
         return self.count * MemoryLayout.size(ofValue: self[0])
+    }
+}
+
+
+extension Vec3 {
+    static func cross(left:Vec3, right:Vec3) -> Vec3 {
+        let res = Vec3(v: (
+            left.v1 * right.v2 - left.v2 - right.v1,
+            left.v2 * right.v0 - left.v0 - right.v2,
+            left.v0 * right.v1 - left.v1 - right.v0
+        ))
+        
+        return res
     }
 }
 
@@ -74,5 +88,39 @@ class GLHelper {
             return 0
         }
         return shaderHandle
+    }
+    
+    public static func glPerspective(destMatrix:Mat4, fov:Float, aspectRatio:Float, near:Float, far:Float) {
+        let ymax = near * tanf(fov * Float(M_PI / 360.0))
+        let xmax = ymax * aspectRatio
+        
+        
+        Mat4.frustum(left: -xmax, right: xmax, bottom: -ymax, top: ymax, near: near, far: far, andOutputTo: destMatrix)
+    }
+    
+    public static func lookAt(eye:Vec3, center:Vec3, up:Vec3, destMatrix:Mat4) {
+        let f = Vec3.Zero()
+        center.subtract(eye, andOutputTo: f)
+        f.normalize()
+        
+        var u = up.clone()
+        u.normalize()
+        
+        let s = Vec3.cross(left: f, right: u)
+        s.normalize()
+        u = Vec3.cross(left: s, right: f)
+        
+        destMatrix.m00 = s.v0
+        destMatrix.m10 = s.v1
+        destMatrix.m20 = s.v2
+        destMatrix.m01 = u.v0
+        destMatrix.m11 = u.v1
+        destMatrix.m21 = u.v2
+        destMatrix.m02 = -f.v0
+        destMatrix.m12 = -f.v1
+        destMatrix.m22 = -f.v2
+        destMatrix.m30 = -s.dot(eye)
+        destMatrix.m31 = -u.dot(eye)
+        destMatrix.m32 = -f.dot(eye)
     }
 }

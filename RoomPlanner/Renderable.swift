@@ -106,6 +106,12 @@ class Plane: Renderable {
         do {
             self.texture = try GLKTextureLoader.texture(withContentsOfFile: textureFile, options: nil)
             glBindTexture(texture!.target, texture!.name)
+            let aspect = GLfloat(self.texture!.width) / GLfloat(self.texture!.height)
+            if aspect >= 1.0 {
+                self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
+            } else {
+                self.modelPosition.scale(by: Vec4(v: (1, aspect, 1, 0)))
+            }
         } catch _ {
             
         }
