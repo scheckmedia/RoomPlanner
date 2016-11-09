@@ -68,7 +68,7 @@ class GLHelper {
             var infoLog: [GLchar] = [GLchar](repeating: 0, count: Int(value))
             var infoLogLength: GLsizei = 0
             glGetShaderInfoLog(shaderHandle, value, &infoLogLength, &infoLog)
-            var errMsg = NSString(bytes: infoLog, length: Int(infoLogLength),
+            let errMsg = NSString(bytes: infoLog, length: Int(infoLogLength),
                                   encoding: String.Encoding.ascii.rawValue)
             print("Error: \(errMsg)")
             return 0

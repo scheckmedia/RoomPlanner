@@ -6,10 +6,11 @@
 //  Copyright © 2016 AR. All rights reserved.
 //
 import GLMatrix
+import GLKit
 
 protocol Renderable {
     var modelPosition:Mat4 { get set }
-    var textureId:GLuint? { get set }
+    var texture:GLKTextureInfo? { get set }
     func render()
 }
 
@@ -20,18 +21,19 @@ struct Vertex {
 
 class Plane: Renderable {
     internal var modelPosition: Mat4
-    internal var textureId: GLuint? = nil
+    internal var texture: GLKTextureInfo? = nil
     var vao  = GLuint()
     var vbo = GLuint()
     var program : GLuint?
     var posid: GLuint = GLuint()
     var uvid:GLuint = GLuint()
+
     public var color = Vec3(v: (GLfloat(0), GLfloat(0), GLfloat(0)))
     
     private let vertices : [Vertex] = [
             Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0)),
             Vertex(position: (x:  0.5, y:  0.5, z: 0), uv: (x: 1.0, y: 1.0)),
-            Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 1.0)),
+            Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0)),
             
             Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0)),
             Vertex(position: (x: -0.5, y: -0.5, z: 0), uv: (x: 0.0, y: 0.0)),
@@ -86,6 +88,12 @@ class Plane: Renderable {
         glUniform3f(GLint(glGetUniformLocation(program!, "color")), color[0], color[1], color[2])
         glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), modelPosition)
         
+        if self.texture != nil {
+            glActiveTexture(GLenum(GL_TEXTURE0))
+            glBindTexture(texture!.target, texture!.name)
+            glUniform1i(glGetUniformLocation(program!, "tex"), 0)
+        }
+        
         glBindVertexArray(vao)
         glDrawArrays(GLenum(GL_TRIANGLES), 0, 6)
         glBindVertexArray(0)
@@ -94,6 +102,14 @@ class Plane: Renderable {
     }
 
     
+    public func setTexture(textureFile: String) {
+        do {
+            self.texture = try GLKTextureLoader.texture(withContentsOfFile: textureFile, options: nil)
+            glBindTexture(texture!.target, texture!.name)
+        } catch _ {
+            
+        }
+    }
 
     
 }

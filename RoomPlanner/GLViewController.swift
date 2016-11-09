@@ -12,6 +12,7 @@ import GLMatrix
 class GLViewController: GLKViewController {
     
     var planes : [Plane] = []
+    var cam:Mat4 = Mat4.Identity()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +26,27 @@ class GLViewController: GLKViewController {
         rv.backgroundColor = UIColor.clear
         EAGLContext.setCurrent(rv.context)
         
-        var posP1 = Mat4.Identity()
-        var posP2 = Mat4.Identity()
+        let posP1 = Mat4.Identity()
+        let posP2 = Mat4.Identity()
         
         posP1.scale(by: 0.4)
+        posP2.scale(by: 0.5)
+        posP2.translate(by: Vec3(v: (0.0, 0.0, -2.0)))
         
-        posP2.scale(by: 0.3)
-        posP2.translate(by: Vec3(v: (0.3, -0.1, 0.0)))
+        let aspect = GLfloat(self.view!.bounds.width / self.view!.bounds.height)
         
-        planes.append( Plane(pos: posP2) )
-        planes.append( Plane(pos: posP1) )
-        planes[0].color = Vec3(v: (GLfloat(0), GLfloat(0), GLfloat(1)))
-        planes[1].color = Vec3(v: (GLfloat(1), GLfloat(0), GLfloat(0)))
+        self.cam = Mat4.Identity()
+        Mat4.frustum(left: -aspect, right: aspect,
+                     bottom: 1.0, top: -1.0,
+                     near: 1, far: 10, andOutputTo: self.cam)
+        
+        
+        let out = Mat4.Zero()
+        self.cam.multiply(with: posP2, andOutputTo: out)
+        
+        planes.append( Plane(pos: out) )
+        //planes.append( Plane(pos: posP1) )
+        planes[0].setTexture(textureFile: Bundle.main.path(forResource: "wall", ofType: "jpg")!)
         
     }
 
@@ -55,6 +65,22 @@ class GLViewController: GLKViewController {
         }
         
         
-        self.setNeedsFocusUpdate()
+        //self.setNeedsFocusUpdate()
+    }
+    
+    @IBAction func handleZoomGesture(recognizer:UIPinchGestureRecognizer) {
+        planes[0].modelPosition.scale(by: GLfloat(recognizer.scale))
+        recognizer.scale = 1
+    }
+    
+    @IBAction func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+        let angle = recognizer.translation(in: recognizer.view).y * CGFloat(M_PI / 180.0)
+        let s = GLfloat(sin(angle / 2.0))
+        let rot = Quat(x: s, y: 0.0, z: 0.0, w: GLfloat(cos(angle / 2.0)))
+        let rotmat = Mat4.Zero()
+        let pos = planes[0].modelPosition
+        Mat4.fromQuat(q: rot, andOutputTo: rotmat)
+        pos.multiply(with: rotmat)
+        recognizer.setTranslation(CGPoint(x:0, y:0), in: recognizer.view)
     }
 }
