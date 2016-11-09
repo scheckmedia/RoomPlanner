@@ -23,7 +23,11 @@ class CameraViewController: UIViewController {
         
         // Execute only on real iOS devices
         if(TARGET_OS_IPHONE != 0 && TARGET_IPHONE_SIMULATOR == 0) {
+            // Get camera and start stream
             self.cameraStream = CameraStreamController()
+            self.cameraStream?.startCaptureSession()
+            
+            // Attach stream to this view
             self.preview = AVCaptureVideoPreviewLayer(session: self.cameraStream?.session)
             self.view.layer.addSublayer(self.preview!)
             self.preview?.frame = self.view.layer.frame

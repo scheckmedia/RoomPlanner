@@ -25,7 +25,6 @@ class CameraStreamController: NSObject {
         self.delegate = CameraStreamControllerDelegate()
         
         self.createVideoInput()
-        self.startCaptureSession()
         self.createVideoOutput()
     }
     
