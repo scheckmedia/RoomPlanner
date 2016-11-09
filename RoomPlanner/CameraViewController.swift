@@ -33,6 +33,20 @@ class CameraViewController: UIViewController {
             self.preview?.frame = self.view.layer.frame
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Stop processing stream
+        self.cameraStream?.stopCaptureSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Restart processing stream
+        self.cameraStream?.startCaptureSession()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

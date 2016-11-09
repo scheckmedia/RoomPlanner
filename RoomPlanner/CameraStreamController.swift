@@ -12,9 +12,9 @@ import AVFoundation
 
 class CameraStreamController: NSObject {
     
-    public var session: AVCaptureSession?
     private var device: AVCaptureDevice?
     private var delegate: CameraStreamControllerDelegate?
+    internal var session: AVCaptureSession?
     
     override init() {
         super.init()
