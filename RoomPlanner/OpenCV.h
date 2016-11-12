@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface OpenCV : NSObject
 
-+(NSString *) OpenCVVersion;
++(NSString *) openCVVersion;
++(UIImage *) cornersWithCornerHarris: (UIImage *)src size:(int) block_size;
+//+(UIImage *) cornersWithCanny;
 
 @end

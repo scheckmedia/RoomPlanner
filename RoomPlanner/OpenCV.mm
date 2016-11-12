@@ -8,13 +8,24 @@
 
 #import "OpenCV.h"
 #import <opencv2/opencv.hpp>
+#import <opencv2/imgcodecs/ios.h>
 
 @implementation OpenCV
 
-+(NSString *) OpenCVVersion
++(NSString *) openCVVersion
 {
     return [NSString stringWithFormat:@"OpenCV %s", CV_VERSION];
+}
 
++(UIImage *) cornersWithCornerHarris:(UIImage *)src size:(int)block_size
+{
+    cv::Mat buffer, response;
+ 
+    UIImageToMat(src, buffer);
+
+    cvCornerHarris(&buffer, &response, block_size);
+    
+    return MatToUIImage(response);
 }
 
 @end
