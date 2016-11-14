@@ -19,6 +19,7 @@
 		CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */; };
 		CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */; };
 		CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */; };
+		CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD243B391DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
 		D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28AE39F1DD25B64009E8CDD /* wall.jpg */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -50,6 +51,7 @@
 		CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa_01.jpg; sourceTree = "<group>"; };
 		CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa_02.jpg; sourceTree = "<group>"; };
 		CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RoundSofa.obj; sourceTree = "<group>"; };
+		CD243B3A1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RoomPlanner.xcdatamodel; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
 		D28AE39F1DD25B64009E8CDD /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */,
 				27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */,
 				27AF3D311DCCD4B4005A727A /* Info.plist */,
+				CD243B391DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld */,
 				D2E079FE1DCF46CF002C38E1 /* Renderable.swift */,
 				D24868ED1DCF6A2900F74375 /* GLHelper.swift */,
 				27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */,
@@ -327,6 +330,7 @@
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
 				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
 				27016C421DD12420004D98C3 /* OpenCV.mm in Sources */,
+				CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */,
 				27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,6 +517,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CD243B391DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CD243B3A1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodel */,
+			);
+			currentVersion = CD243B3A1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodel */;
+			path = RoomPlanner.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 27AF3D181DCCD4B4005A727A /* Project object */;
 }
