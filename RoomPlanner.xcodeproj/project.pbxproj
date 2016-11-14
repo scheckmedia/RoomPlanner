@@ -16,6 +16,9 @@
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
 		27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */; };
 		27FD09411DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */; };
+		CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */; };
+		CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */; };
+		CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
 		D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28AE39F1DD25B64009E8CDD /* wall.jpg */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -44,6 +47,9 @@
 		27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStreamControllerDelegate.swift; sourceTree = "<group>"; };
 		908915E69450BA76D6F9AD24 /* Pods_RoomPlanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RoomPlanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.release.xcconfig"; sourceTree = "<group>"; };
+		CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa_01.jpg; sourceTree = "<group>"; };
+		CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa_02.jpg; sourceTree = "<group>"; };
+		CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RoundSofa.obj; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
 		D28AE39F1DD25B64009E8CDD /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
@@ -97,7 +103,7 @@
 		27AF3D221DCCD4B4005A727A /* RoomPlanner */ = {
 			isa = PBXGroup;
 			children = (
-				D28AE39F1DD25B64009E8CDD /* wall.jpg */,
+				CD243B2C1DD9A7F60083FFC7 /* Resources */,
 				27016C431DD12623004D98C3 /* View Controller */,
 				27DCD54B1DD122E3002F69B5 /* OpenCV */,
 				D2D615241DCF742D00E9C726 /* Shader */,
@@ -131,6 +137,33 @@
 				93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CD243B2C1DD9A7F60083FFC7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CD243B2F1DD9A82C0083FFC7 /* Models */,
+				CD243B2E1DD9A81C0083FFC7 /* Textures */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		CD243B2E1DD9A81C0083FFC7 /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */,
+				CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */,
+				D28AE39F1DD25B64009E8CDD /* wall.jpg */,
+			);
+			name = Textures;
+			sourceTree = "<group>";
+		};
+		CD243B2F1DD9A82C0083FFC7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		D2D615241DCF742D00E9C726 /* Shader */ = {
@@ -221,8 +254,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */,
+				CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */,
+				CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */,
 				D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */,
 				27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */,
+				CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
 				27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */,
