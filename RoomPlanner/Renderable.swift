@@ -11,7 +11,7 @@ import GLKit
 protocol Renderable {
     var modelPosition:Mat4 { get set }
     var texture:GLKTextureInfo? { get set }
-    func render()
+    func render(projection: Mat4, view:Mat4)
 }
 
 struct Vertex {
@@ -28,7 +28,6 @@ class Plane: Renderable {
     var posid: GLuint = GLuint()
     var uvid:GLuint = GLuint()
 
-    public var color = Vec3(v: (GLfloat(0), GLfloat(0), GLfloat(0)))
     
     private let vertices : [Vertex] = [
             Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0)),
@@ -79,14 +78,16 @@ class Plane: Renderable {
         return UnsafeRawPointer(bitPattern: n)!
     }
     
-    internal func render() {
+    internal func render(projection: Mat4, view: Mat4) {
         if self.program != nil {
             glUseProgram(self.program!)
         }
         
+        let mvp = Mat4.Zero()
+        view.multiply(with: modelPosition, andOutputTo: mvp)
+        projection.multiply(with: mvp, andOutputTo: mvp)
         
-        glUniform3f(GLint(glGetUniformLocation(program!, "color")), color[0], color[1], color[2])
-        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), modelPosition)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
         
         if self.texture != nil {
             glActiveTexture(GLenum(GL_TEXTURE0))
@@ -107,11 +108,7 @@ class Plane: Renderable {
             self.texture = try GLKTextureLoader.texture(withContentsOfFile: textureFile, options: nil)
             glBindTexture(texture!.target, texture!.name)
             let aspect = GLfloat(self.texture!.width) / GLfloat(self.texture!.height)
-            if aspect >= 1.0 {
-                self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
-            } else {
-                self.modelPosition.scale(by: Vec4(v: (1, aspect, 1, 0)))
-            }
+            self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
         } catch _ {
             
         }

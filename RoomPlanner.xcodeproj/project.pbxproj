@@ -23,6 +23,7 @@
 		CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */; };
 		CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
+		D2545D811DDB77A400FA41B8 /* room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2545D801DDB77A400FA41B8 /* room.jpg */; };
 		D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28AE39F1DD25B64009E8CDD /* wall.jpg */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
 		D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615271DCF74FF00E9C726 /* plane.fsh */; };
@@ -57,6 +58,7 @@
 		CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
+		D2545D801DDB77A400FA41B8 /* room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = room.jpg; path = ../../../../../Downloads/room.jpg; sourceTree = "<group>"; };
 		D28AE39F1DD25B64009E8CDD /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
 		D2D615271DCF74FF00E9C726 /* plane.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = plane.fsh; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		CD243B2E1DD9A81C0083FFC7 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				D2545D801DDB77A400FA41B8 /* room.jpg */,
 				CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */,
 				CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */,
 				D28AE39F1DD25B64009E8CDD /* wall.jpg */,
@@ -268,6 +271,7 @@
 				D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */,
 				27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */,
 				CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */,
+				D2545D811DDB77A400FA41B8 /* room.jpg in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
 				27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */,

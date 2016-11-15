@@ -19,13 +19,18 @@ extension Array {
 extension Vec3 {
     static func cross(left:Vec3, right:Vec3) -> Vec3 {
         let res = Vec3(v: (
-            left.v1 * right.v2 - left.v2 - right.v1,
-            left.v2 * right.v0 - left.v0 - right.v2,
-            left.v0 * right.v1 - left.v1 - right.v0
+            left.v1 * right.v2 - left.v2 * right.v1,
+            left.v2 * right.v0 - left.v0 * right.v2,
+            left.v0 * right.v1 - left.v1 * right.v0
         ))
         
         return res
     }
+}
+
+extension FloatingPoint {
+    var degreesToRadians: Self { return self * .pi / 180 }
+    var radiansToDegrees: Self { return self * 180 / .pi }
 }
 
 class GLHelper {
@@ -91,11 +96,29 @@ class GLHelper {
     }
     
     public static func glPerspective(destMatrix:Mat4, fov:Float, aspectRatio:Float, near:Float, far:Float) {
-        let ymax = near * tanf(fov * Float(M_PI / 360.0))
-        let xmax = ymax * aspectRatio
+        let tanHalfFOV = tanf(fov.degreesToRadians / 2.0)
         
+        destMatrix.m00 = 1.0 / (tanHalfFOV * aspectRatio)
+        destMatrix.m01 = 0.0
+        destMatrix.m02 = 0.0
+        destMatrix.m03 = 0.0
         
-        Mat4.frustum(left: -xmax, right: xmax, bottom: -ymax, top: ymax, near: near, far: far, andOutputTo: destMatrix)
+        destMatrix.m10 = 0.0
+        destMatrix.m11 = 1.0 / tanHalfFOV
+        destMatrix.m12 = 0.0
+        destMatrix.m13 = 0.0
+        
+        destMatrix.m20 = 0.0
+        destMatrix.m21 = 0.0
+        destMatrix.m22 = -(far + near) / (far - near)
+        destMatrix.m23 = -1
+        
+        destMatrix.m30 = 0.0
+        destMatrix.m31 = 0.0
+        destMatrix.m32 = -(2.0 * far * near) / (far - near)
+        destMatrix.m33 = 0.0
+        
+        //Mat4.frustum(left: -xmax, right: xmax, bottom: -ymax, top: ymax, near: near, far: far, andOutputTo: destMatrix)
     }
     
     public static func lookAt(eye:Vec3, center:Vec3, up:Vec3, destMatrix:Mat4) {
@@ -121,6 +144,6 @@ class GLHelper {
         destMatrix.m22 = -f.v2
         destMatrix.m30 = -s.dot(eye)
         destMatrix.m31 = -u.dot(eye)
-        destMatrix.m32 = -f.dot(eye)
+        destMatrix.m32 =  f.dot(eye)
     }
 }
