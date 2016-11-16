@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface OpenCV : NSObject
 
 +(NSString *) openCVVersion;
-+(UIImage *) cornersWithCornerHarris: (UIImage *)src size:(int) block_size;
-//+(UIImage *) cornersWithCanny;
++(UIImage *) greyScaleFromImage: (UIImage *) image;
++(UIImage *) cornerHarrisDetection: (UIImage *) src blocksize:(int) block_size;
++(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
 
 @end

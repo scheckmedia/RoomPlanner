@@ -10,20 +10,24 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class CameraStreamController: NSObject {
+protocol CVStateListener {
+    func onFrameReady(image: UIImage)
+    func onFeaturesDetected()
+}
+
+class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     private var device: AVCaptureDevice?
-    private var delegate: CameraStreamControllerDelegate?
+    public var delegate: CVStateListener?
     internal var session: AVCaptureSession?
     
     override init() {
         super.init()
         
         self.session = AVCaptureSession()
-        self.session!.sessionPreset = AVCaptureSessionPresetPhoto
+        self.session!.sessionPreset = AVCaptureSessionPreset1280x720
         self.device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) as AVCaptureDevice
-        self.delegate = CameraStreamControllerDelegate()
-        
+     
         self.createVideoInput()
         self.createVideoOutput()
     }
@@ -41,7 +45,7 @@ class CameraStreamController: NSObject {
         
         output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
         output.alwaysDiscardsLateVideoFrames = true
-        output.setSampleBufferDelegate(self.delegate, queue: DispatchQueue(label: "HTW.AR.frame_buffer"))
+        output.setSampleBufferDelegate(self, queue: DispatchQueue(label: "HTW.AR.Frame_Buffer"))
         
         self.session!.addOutput(output)
     }
@@ -52,6 +56,20 @@ class CameraStreamController: NSObject {
     
     internal func stopCaptureSession() {
         self.session?.stopRunning()
+    }
+    
+    internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {        
+        let image: UIImage = OpenCV.image(from: sampleBuffer)
+        let processed = OpenCV.greyScale(from: image)
+        
+        if self.delegate != nil {
+            self.delegate!.onFrameReady(image: processed!)
+        }
+        
+    }
+    
+    internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+        print("frame dropped")
     }
     
 }

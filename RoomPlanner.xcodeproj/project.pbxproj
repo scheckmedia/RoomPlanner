@@ -15,7 +15,6 @@
 		27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */; };
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
 		27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */; };
-		27FD09411DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */; };
 		CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */; };
 		CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD243B311DD9A9E20083FFC7 /* RoundSofa_02.jpg */; };
 		CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */ = {isa = PBXBuildFile; fileRef = CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */; };
@@ -48,7 +47,6 @@
 		27AF3D2F1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27AF3D311DCCD4B4005A727A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStreamController.swift; sourceTree = "<group>"; };
-		27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraStreamControllerDelegate.swift; sourceTree = "<group>"; };
 		908915E69450BA76D6F9AD24 /* Pods_RoomPlanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RoomPlanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F644106BCAFE659E67ABDF /* Pods-RoomPlanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.release.xcconfig"; sourceTree = "<group>"; };
 		CD243B301DD9A9E20083FFC7 /* RoundSofa_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa_01.jpg; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				D2E079FE1DCF46CF002C38E1 /* Renderable.swift */,
 				D24868ED1DCF6A2900F74375 /* GLHelper.swift */,
 				27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */,
-				27FD09401DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift */,
 				CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */,
 				CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */,
 			);
@@ -337,7 +334,6 @@
 				CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
 				27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */,
-				27FD09411DD38CFA000ACF10 /* CameraStreamControllerDelegate.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
 				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
 				CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */,

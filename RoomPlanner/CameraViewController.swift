@@ -9,15 +9,12 @@
 import UIKit
 import AVFoundation
 
-/**
-    IMPORTANT: Will cause bad access errors if tested in the iOS Simulator!
- */
-
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, CVStateListener {
     
+    @IBOutlet weak var imageView: UIImageView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,12 +22,13 @@ class CameraViewController: UIViewController {
         if(TARGET_OS_IPHONE != 0 && TARGET_IPHONE_SIMULATOR == 0) {
             // Get camera and start stream
             self.cameraStream = CameraStreamController()
+            self.cameraStream?.delegate = self
             self.cameraStream?.startCaptureSession()
             
             // Attach stream to this view
-            self.preview = AVCaptureVideoPreviewLayer(session: self.cameraStream?.session)
-            self.view.layer.addSublayer(self.preview!)
-            self.preview?.frame = self.view.layer.frame
+            //self.preview = AVCaptureVideoPreviewLayer(session: self.cameraStream?.session)
+            //self.view.layer.addSublayer(self.preview!)
+            //self.preview?.frame = self.view.layer.frame
         }
     }
     
@@ -51,6 +49,17 @@ class CameraViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func onFrameReady(image: UIImage) {
+        DispatchQueue.main.async {
+            self.imageView.image = image
+            self.imageView.setNeedsDisplay()
+        }
+    }
+    
+    func onFeaturesDetected() {
+        
     }
 
 }
