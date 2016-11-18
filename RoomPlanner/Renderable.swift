@@ -51,6 +51,19 @@ class Plane: Renderable {
         glGenBuffers(1, &vbo)
         
         createData()
+        
+        
+        let path = Bundle.main.path(forResource: "RoundSofa", ofType: "obj")
+        let url = URL(fileURLWithPath: path!)
+        let asset = MDLAsset(url: url)
+        let mesh = asset.object(at: 0) as! MDLMesh
+
+        let vertexBuffer = mesh.vertexBuffers[0]
+        let descripter = mesh.vertexDescriptor
+        let submeshes = mesh.submeshes
+        
+
+        
     }
     
     deinit {
