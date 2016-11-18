@@ -11,7 +11,7 @@ import AVFoundation
 
 class CameraViewController: UIViewController, CVStateListener {
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var renderView: RenderView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
    
@@ -30,6 +30,15 @@ class CameraViewController: UIViewController, CVStateListener {
             //self.view.layer.addSublayer(self.preview!)
             //self.preview?.frame = self.view.layer.frame
         }
+        
+        renderView.context = EAGLContext(api: .openGLES2)
+        renderView.drawableDepthFormat = .format24
+        renderView.drawableColorFormat = .RGBA8888
+        renderView.drawableStencilFormat = .format8
+        renderView.backgroundColor = UIColor.clear
+        EAGLContext.setCurrent(renderView.context)
+        renderView.setup()
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,8 +62,8 @@ class CameraViewController: UIViewController, CVStateListener {
     
     func onFrameReady(image: UIImage) {
         DispatchQueue.main.async {
-            self.imageView.image = image
-            self.imageView.setNeedsDisplay()
+            //self.imageView.image = image
+            //self.imageView.setNeedsDisplay()
         }
     }
     
