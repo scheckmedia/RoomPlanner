@@ -126,6 +126,17 @@ class Plane: Renderable {
             
         }
     }
-
+    
+    
+    public func setTexture(withImage image:UIImage) {
+        do {
+            self.texture = try GLKTextureLoader.texture(with: image.cgImage!, options: nil)
+            glBindTexture(texture!.target, texture!.name)
+            let aspect = GLfloat(self.texture!.width) / GLfloat(self.texture!.height)
+            self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
+        } catch _ {
+            
+        }
+    }
     
 }

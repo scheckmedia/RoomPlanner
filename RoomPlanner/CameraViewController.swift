@@ -59,7 +59,7 @@ class CameraViewController: UIViewController, CVStateListener {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+        
     func onFrameReady(image: UIImage) {
         DispatchQueue.main.async {
             //self.imageView.image = image

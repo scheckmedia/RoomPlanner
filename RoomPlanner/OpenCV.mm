@@ -12,6 +12,9 @@
 
 @implementation OpenCV
 
+//static EAGLContext *glContext = NULL;
+//static GLuint textureId;
+
 +(NSString *) openCVVersion
 {
     return [NSString stringWithFormat:@"OpenCV %s", CV_VERSION];
@@ -27,6 +30,14 @@
     
     return MatToUIImage(response);
 }
+
+//+(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
+//{
+//    if(ctx != NULL)
+//        glContext = ctx;
+//    
+//    textureId = tid;
+//}
 
 /*
     Source: https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW4

@@ -42,7 +42,12 @@ class RenderView : GLKView, GLKViewDelegate {
         for p in planes {
             p.render(projection: self.perspective, view: self.cam)
         }
-
+    }
+    
+    public func updateTexture(withImage image: UIImage) {
+        for p in planes {
+            p.setTexture(withImage: image)
+        }
     }
     
 }

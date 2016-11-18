@@ -10,7 +10,6 @@
 		27016C421DD12420004D98C3 /* OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 27016C411DD12420004D98C3 /* OpenCV.mm */; };
 		27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D231DCCD4B4005A727A /* AppDelegate.swift */; };
 		27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D251DCCD4B4005A727A /* CameraViewController.swift */; };
-		27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D271DCCD4B4005A727A /* GLViewController.swift */; };
 		27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D291DCCD4B4005A727A /* Main.storyboard */; };
 		27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */; };
 		27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AF3D2E1DCCD4B4005A727A /* LaunchScreen.storyboard */; };
@@ -42,7 +41,6 @@
 		27AF3D201DCCD4B4005A727A /* RoomPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AF3D231DCCD4B4005A727A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27AF3D251DCCD4B4005A727A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		27AF3D271DCCD4B4005A727A /* GLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLViewController.swift; sourceTree = "<group>"; };
 		27AF3D2A1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27AF3D2C1DCCD4B4005A727A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AF3D2F1DCCD4B4005A727A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 		27016C431DD12623004D98C3 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				27AF3D271DCCD4B4005A727A /* GLViewController.swift */,
 				27AF3D251DCCD4B4005A727A /* CameraViewController.swift */,
 			);
 			name = "View Controller";
@@ -238,7 +235,6 @@
 				TargetAttributes = {
 					27AF3D1F1DCCD4B4005A727A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 3LPDW8B3J9;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -338,7 +334,6 @@
 				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
 				CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
-				27AF3D281DCCD4B4005A727A /* GLViewController.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
 				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
 				CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */,
@@ -471,7 +466,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 3LPDW8B3J9;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
@@ -494,7 +489,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 3LPDW8B3J9;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
