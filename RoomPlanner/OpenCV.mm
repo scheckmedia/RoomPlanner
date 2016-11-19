@@ -35,18 +35,20 @@ static GLuint textureId;
 +(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
 {
     if(ctx != NULL)
-        glContext = ctx;
+        glContext = [[EAGLContext alloc]initWithAPI: kEAGLRenderingAPIOpenGLES2 sharegroup:ctx.sharegroup];
     
     textureId = tid;
     
+    //create an empty texture and alloc memory
     [EAGLContext setCurrentContext: glContext];
     glBindTexture(GL_TEXTURE_2D, textureId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1280, 720, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 720, 1280, 0, GL_RGBA, GL_UNSIGNED_BYTE, nil);
+    
+    glFlush();
 }
 
 /*
@@ -90,12 +92,15 @@ static GLuint textureId;
     
     if(glContext != nil)
     {
-        cv::Mat imageMat;
+        cv::Mat imageMat, outMat;
+        
         UIImageToMat(image, imageMat);
+        cv::transpose(imageMat, outMat);
+        cv::flip(outMat, outMat, 1);
         [EAGLContext setCurrentContext: glContext];
         glBindTexture(GL_TEXTURE_2D, textureId);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageMat.cols, imageMat.rows, GL_RGBA, GL_UNSIGNED_BYTE, imageMat.ptr());
-        glBindTexture(GL_TEXTURE_2D, 0);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, outMat.cols, outMat.rows, GL_RGBA, GL_UNSIGNED_BYTE, outMat.ptr());
+        glFlush();
     }
     
     
