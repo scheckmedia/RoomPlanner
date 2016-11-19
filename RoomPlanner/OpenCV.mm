@@ -15,21 +15,6 @@
 //static EAGLContext *glContext = NULL;
 //static GLuint textureId;
 
-+(NSString *) openCVVersion
-{
-    return [NSString stringWithFormat:@"OpenCV %s", CV_VERSION];
-}
-
-+(UIImage *) cornerHarrisDetection:(UIImage *)src blocksize:(int)block_size
-{
-    cv::Mat buffer, response;
- 
-    UIImageToMat(src, buffer);
-
-    cvCornerHarris(&buffer, &response, block_size);
-    
-    return MatToUIImage(response);
-}
 
 //+(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
 //{
@@ -84,15 +69,49 @@
 
 +(UIImage *) greyScaleFromImage:(UIImage *)image
 {
+    return MatToUIImage([self toGreyScale:image]);
+}
+
++(cv::Mat) toGreyScale:(UIImage *)image
+{
     cv::Mat imageMat, greyMat, outMat;
     
     UIImageToMat(image, imageMat);
     
     cv::cvtColor(imageMat, greyMat, CV_BGRA2GRAY);
-    cv::transpose(greyMat, outMat);
-    cv::flip(outMat, outMat, 1);
+    //cv::transpose(greyMat, outMat);
+    //cv::flip(outMat, outMat, 1);
     
-    return MatToUIImage(outMat);
+    return greyMat;
 }
+
++(NSArray *) cornerHarrisDetection:(UIImage *)src sobel_kernel:(int)k blocksize:(int)block_size
+{
+    NSMutableArray* res = [[NSMutableArray alloc] init];
+    const int THRESHOLD = 50;
+    
+    cv::Mat cvt = [self toGreyScale:src];
+    cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
+    cv::Mat dst_norm;
+    
+    // Do the corner harris - biatch
+    cv::cornerHarris(cvt, dst, block_size, k, 0.01, cv::BORDER_DEFAULT);
+    cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+
+    // Iterate over image, push points after a determined threshold
+    for(int y = 0; y < dst_norm.cols; y++)
+    {
+        for(int x = 0; x < dst_norm.rows; x++)
+        {
+            if((int) dst_norm.at<float>(x,y) > THRESHOLD) //Thres
+            {
+                [res addObject: [NSValue valueWithCGPoint:CGPointMake(x, y)]];
+            }
+        }
+    }
+    
+    return res;
+}
+
 
 @end
