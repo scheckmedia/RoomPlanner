@@ -8,37 +8,44 @@
 
 import UIKit
 import AVFoundation
+import GLKit
 
-class CameraViewController: UIViewController, CVStateListener {
+class CameraViewController: GLKViewController, CVStateListener {
     
-    @IBOutlet weak var renderView: RenderView!
+    //@IBOutlet weak var imageView: UIImageView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
+    var rv:RenderView? = nil
+    var videoTextureId = GLuint()
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Execute only on real iOS devices
         if(TARGET_OS_IPHONE != 0 && TARGET_IPHONE_SIMULATOR == 0) {
             // Get camera and start stream
             self.cameraStream = CameraStreamController()
             self.cameraStream?.delegate = self
             self.cameraStream?.startCaptureSession()
-            
             // Attach stream to this view
             //self.preview = AVCaptureVideoPreviewLayer(session: self.cameraStream?.session)
             //self.view.layer.addSublayer(self.preview!)
             //self.preview?.frame = self.view.layer.frame
         }
         
-        renderView.context = EAGLContext(api: .openGLES2)
-        renderView.drawableDepthFormat = .format24
-        renderView.drawableColorFormat = .RGBA8888
-        renderView.drawableStencilFormat = .format8
-        renderView.backgroundColor = UIColor.clear
-        EAGLContext.setCurrent(renderView.context)
-        renderView.setup()
-
+        self.rv = self.view as? RenderView
+        
+        rv!.context = EAGLContext(api: .openGLES2)
+        rv!.drawableDepthFormat = .format24
+        rv!.drawableColorFormat = .RGBA8888
+        rv!.drawableStencilFormat = .format8
+        rv!.backgroundColor = UIColor.clear
+        EAGLContext.setCurrent(rv!.context)
+        rv!.setup()
+                
+        glGenTextures(1, &self.videoTextureId)
+        OpenCV.bindContext(rv!.context, withTextureID: self.videoTextureId)
+        self.rv!.updateTexture(id: self.videoTextureId)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,11 +66,11 @@ class CameraViewController: UIViewController, CVStateListener {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-        
+    
     func onFrameReady(image: UIImage) {
         DispatchQueue.main.async {
-            //self.imageView.image = image
-            //self.imageView.setNeedsDisplay()
+            //EAGLContext.setCurrent(self.rv?.context)
+            //self.rv!.updateTexture(withImage: image)
         }
     }
     

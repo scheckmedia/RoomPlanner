@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
 # File Created: 23.12.2015 16:09:06
 
-mtllib ROUNDSOFA.mat
+mtllib ROUNDSOFA.mtl
 
 #
 # object Box001

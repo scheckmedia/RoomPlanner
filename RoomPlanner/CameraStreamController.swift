@@ -62,12 +62,12 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {        
         let image: UIImage = OpenCV.image(from: sampleBuffer)
-        let processed = OpenCV.greyScale(from: image)
-        
-        
-        if self.delegate != nil {
-            self.delegate!.onFrameReady(image: processed!)
-        }
+//        let processed = OpenCV.greyScale(from: image)
+//        
+//        
+//        if self.delegate != nil {
+//            self.delegate!.onFrameReady(image: processed!)
+//        }
         
     }
     

@@ -10,7 +10,7 @@ import GLKit
 
 protocol Renderable {
     var modelPosition:Mat4 { get set }
-    var texture:GLKTextureInfo? { get set }
+    var texture:GLuint? { get set }
     func render(projection: Mat4, view:Mat4)
 }
 
@@ -21,7 +21,7 @@ struct Vertex {
 
 class Plane: Renderable {
     internal var modelPosition: Mat4
-    internal var texture: GLKTextureInfo? = nil
+    public var texture: GLuint? = nil
     var vao  = GLuint()
     var vbo = GLuint()
     var program : GLuint?
@@ -100,27 +100,28 @@ class Plane: Renderable {
         view.multiply(with: modelPosition, andOutputTo: mvp)
         projection.multiply(with: mvp, andOutputTo: mvp)
         
-        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)        
         
         if self.texture != nil {
             glActiveTexture(GLenum(GL_TEXTURE0))
-            glBindTexture(texture!.target, texture!.name)
+            glBindTexture(GLenum(GL_TEXTURE_2D), self.texture!)
             glUniform1i(glGetUniformLocation(program!, "tex"), 0)
         }
         
         glBindVertexArray(vao)
         glDrawArrays(GLenum(GL_TRIANGLES), 0, 6)
         glBindVertexArray(0)
-        
+        glBindTexture(GLenum(GL_TEXTURE_2D), 0)
         glUseProgram(0)
     }
 
     
     public func setTexture(textureFile: String) {
         do {
-            self.texture = try GLKTextureLoader.texture(withContentsOfFile: textureFile, options: nil)
-            glBindTexture(texture!.target, texture!.name)
-            let aspect = GLfloat(self.texture!.width) / GLfloat(self.texture!.height)
+            let tex = try GLKTextureLoader.texture(withContentsOfFile: textureFile, options: nil)
+            self.texture = tex.name
+            glBindTexture(tex.target, self.texture!)
+            let aspect = GLfloat(tex.width) / GLfloat(tex.height)
             self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
         } catch _ {
             
@@ -129,14 +130,38 @@ class Plane: Renderable {
     
     
     public func setTexture(withImage image:UIImage) {
-        do {
-            self.texture = try GLKTextureLoader.texture(with: image.cgImage!, options: nil)
-            glBindTexture(texture!.target, texture!.name)
-            let aspect = GLfloat(self.texture!.width) / GLfloat(self.texture!.height)
-            self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
-        } catch _ {
+        if(self.texture == nil) {
+            self.texture = 0
+            glGenTextures(1, &self.texture!)
             
+            let aspect = GLfloat(image.size.width) / GLfloat(image.size.height)
+            self.modelPosition.scale(by: Vec4(v: (aspect, 1, 1, 0)))
         }
+        
+        
+        let imgRef = image.cgImage!        
+        let width = size_t(image.size.width)
+        let height = size_t(image.size.height)
+        let colorPlanes:size_t = 4
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let rawData = UnsafeMutablePointer<GLubyte>.allocate(capacity: width * height * colorPlanes)
+        let spriteCtx = CGContext(data: rawData, width: width, height: height, bitsPerComponent: 8, bytesPerRow: width * colorPlanes, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        spriteCtx!.draw(imgRef, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        glBindTexture(GLenum(GL_TEXTURE_2D), self.texture!)
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_S), GL_CLAMP_TO_EDGE);
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_T), GL_CLAMP_TO_EDGE);
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GL_LINEAR);
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR);
+        glTexImage2D(GLenum(GL_TEXTURE_2D), 0, GLint(GL_RGBA), GLsizei(width), GLsizei(height), 0, GLenum(GL_RGBA), GLenum(GL_UNSIGNED_BYTE), rawData);
+
+        free(rawData)
+        
+    }
+    
+    private func dataFromImage(_ image: UIImage) -> Data? {
+        
+        return nil
     }
     
 }

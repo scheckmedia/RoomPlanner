@@ -31,7 +31,7 @@ class RenderView : GLKView, GLKViewDelegate {
         
         let pos = Mat4.Identity();
         let p = Plane(pos: pos)
-        p.setTexture(textureFile: Bundle.main.path(forResource: "room", ofType: "jpg")!)
+        //p.setTexture(textureFile: Bundle.main.path(forResource: "room", ofType: "jpg")!)
         planes.append(p);
     }
     
@@ -41,13 +41,23 @@ class RenderView : GLKView, GLKViewDelegate {
         
         for p in planes {
             p.render(projection: self.perspective, view: self.cam)
-        }
+        }        
     }
     
     public func updateTexture(withImage image: UIImage) {
-        for p in planes {
+        for p in planes {            
             p.setTexture(withImage: image)
+        }        
+        print("update texture")
+        
+    }
+    
+    public func updateTexture(id: GLuint) {
+        for p in planes {
+            p.texture = id
         }
+        print("update texture")
+        
     }
     
 }

@@ -2,7 +2,6 @@
 # platform :ios, '9.0'
 #
 source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/CocoaPods/Specs/blob/master/Specs/GLMatrix/0.1.5/GLMatrix.podspec.json' 
 
 
 target 'RoomPlanner' do
@@ -11,7 +10,6 @@ target 'RoomPlanner' do
 
   # Pods for RoomPlanner
   #
-  pod 'GLMatrix'
   pod 'OpenCV'
-
+  pod 'GLMatrix'
 end

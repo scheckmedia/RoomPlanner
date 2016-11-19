@@ -9,11 +9,12 @@
 #import "OpenCV.h"
 #import <opencv2/opencv.hpp>
 #import <opencv2/imgcodecs/ios.h>
+#import <GLKit/GLKit.h>
 
 @implementation OpenCV
 
-//static EAGLContext *glContext = NULL;
-//static GLuint textureId;
+static EAGLContext *glContext = NULL;
+static GLuint textureId;
 
 +(NSString *) openCVVersion
 {
@@ -31,13 +32,22 @@
     return MatToUIImage(response);
 }
 
-//+(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
-//{
-//    if(ctx != NULL)
-//        glContext = ctx;
-//    
-//    textureId = tid;
-//}
++(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
+{
+    if(ctx != NULL)
+        glContext = ctx;
+    
+    textureId = tid;
+    
+    [EAGLContext setCurrentContext: glContext];
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1280, 720, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
 
 /*
     Source: https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW4
@@ -76,6 +86,20 @@
     // Create an image object from the Quartz image
     UIImage *image = [UIImage imageWithCGImage:quartzImage];
     
+    
+    
+    if(glContext != nil)
+    {
+        cv::Mat imageMat;
+        UIImageToMat(image, imageMat);
+        [EAGLContext setCurrentContext: glContext];
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageMat.cols, imageMat.rows, GL_RGBA, GL_UNSIGNED_BYTE, imageMat.ptr());
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    
+    
+    
     // Release the Quartz image
     CGImageRelease(quartzImage);
     
@@ -91,6 +115,7 @@
     cv::cvtColor(imageMat, greyMat, CV_BGRA2GRAY);
     cv::transpose(greyMat, outMat);
     cv::flip(outMat, outMat, 1);
+        
     
     return MatToUIImage(outMat);
 }

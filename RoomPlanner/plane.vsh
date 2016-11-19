@@ -1,4 +1,3 @@
-#extension GL_EXT_shader_framebuffer_fetch : require
 attribute vec3 position;
 attribute vec2 uv_coord;
 
