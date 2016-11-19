@@ -13,7 +13,7 @@ import AVFoundation
 
 protocol CVStateListener {
     func onFrameReady(image: UIImage)
-    func onFeaturesDetected()
+    func onFeaturesDetected(data: NSArray)
 }
 
 class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -62,17 +62,35 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {        
         let image: UIImage = OpenCV.image(from: sampleBuffer)
-        let processed = OpenCV.greyScale(from: image)
-        
+        let processed: NSArray = OpenCV.cornerHarrisDetection(image, sobel_kernel: 3, blocksize: 8) as NSArray
+        let test = self.drawImage(image: image, data: processed)
         
         if self.delegate != nil {
-            self.delegate!.onFrameReady(image: processed!)
+            self.delegate!.onFrameReady(image: test)
+            self.delegate!.onFeaturesDetected(data: processed)
         }
-        
     }
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         print("frame dropped")
+    }
+    
+    internal func drawImage(image: UIImage, data: NSArray) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
+        
+        image.draw(at: CGPoint.zero)
+        
+        for point in data {
+            let p = point as! CGPoint
+            
+            UIColor.red.setFill()
+            UIRectFill(CGRect(x: p.x, y: p.y, width: 10, height: 10))
+        }
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
 }

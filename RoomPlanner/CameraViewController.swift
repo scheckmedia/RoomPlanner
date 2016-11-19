@@ -11,6 +11,7 @@ import AVFoundation
 
 class CameraViewController: UIViewController, CVStateListener {
     
+    //@IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var renderView: RenderView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
@@ -38,7 +39,6 @@ class CameraViewController: UIViewController, CVStateListener {
         renderView.backgroundColor = UIColor.clear
         EAGLContext.setCurrent(renderView.context)
         renderView.setup()
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,11 +63,12 @@ class CameraViewController: UIViewController, CVStateListener {
     func onFrameReady(image: UIImage) {
         DispatchQueue.main.async {
             //self.imageView.image = image
+            //self.imageView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2))
             //self.imageView.setNeedsDisplay()
         }
     }
     
-    func onFeaturesDetected() {
+    func onFeaturesDetected(data: NSArray) {
         
     }
 
