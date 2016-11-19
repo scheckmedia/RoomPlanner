@@ -23,6 +23,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" id="Jqf-gJ-fBa"/>
+                    <connections>
+                        <outlet property="renderView" destination="tsR-hK-woN" id="1uA-kB-Fs3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>

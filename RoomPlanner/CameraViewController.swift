@@ -13,6 +13,7 @@ import GLKit
 class CameraViewController: GLKViewController, CVStateListener {
     
     //@IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var renderView: RenderView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
     var rv:RenderView? = nil
@@ -67,14 +68,15 @@ class CameraViewController: GLKViewController, CVStateListener {
         // Dispose of any resources that can be recreated.
     }
     
-    func onFrameReady(image: UIImage) {
-        DispatchQueue.main.async {
-            //EAGLContext.setCurrent(self.rv?.context)
-            //self.rv!.updateTexture(withImage: image)
-        }
+    func update() {
+        self.cameraStream?.currentFrame = self.framesDisplayed
     }
     
-    func onFeaturesDetected() {
+    func onFrameReady(image: UIImage) {
+        
+    }
+    
+    func onFeaturesDetected(data: NSArray) {
         
     }
 

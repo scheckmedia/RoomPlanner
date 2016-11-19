@@ -12,10 +12,9 @@
 
 @interface OpenCV : NSObject
 
-+(NSString *) openCVVersion;
-+(UIImage *) greyScaleFromImage: (UIImage *) image;
-+(UIImage *) cornerHarrisDetection: (UIImage *) src blocksize:(int) block_size;
-+(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
 +(void) bindContext:(EAGLContext*) ctx withTextureID:(GLuint) tid;
++(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
++(UIImage *) greyScaleFromImage: (UIImage *) image;
++(NSArray *) cornerHarrisDetection:(UIImage *)src sobel_kernel:(int)k blocksize:(int)block_size;
 
 @end
