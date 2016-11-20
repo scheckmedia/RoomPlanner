@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import GLKit
+import GLMatrix
 
 class CameraViewController: GLKViewController, CVStateListener {
     
@@ -68,17 +69,25 @@ class CameraViewController: GLKViewController, CVStateListener {
         // Dispose of any resources that can be recreated.
     }
     
-    func update() {
-        self.cameraStream?.currentFrame = self.framesDisplayed
-    }
+    //func update() {}
     
-    func onFrameReady(image: UIImage) {
-        
-    }
+    func onFrameReady(image: UIImage) {}
     
     func onFeaturesDetected(data: NSArray) {
-        
+        DispatchQueue.main.async {
+            var points = [GLPoint3]()
+            for point in data {
+                let p = point as! CGPoint
+                let pp = GLPoint3(x: GLfloat(p.x), y: GLfloat(p.y), z: 0)
+                points.append(pp)
+            }
+            
+            let f = Feature(points: points)
+            f.aspectRatio = GLfloat(720.0 / 1280.0)
+            //f.modelPosition.scale(by: Vec4(v:(aspectRatio, GLfloat(1.0), GLfloat(1.0), GLfloat(1.0))))
+            //f.modelPosition.translate(by: Vec3(v: (-1.0, -0.5, 0)))
+            self.rv!.debugFeature = f
+        }
     }
-
 }
 

@@ -22,6 +22,8 @@
 		CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */; };
 		CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
+		D2633E121DE18FEA0075F9E1 /* feature.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2633E101DE18FEA0075F9E1 /* feature.fsh */; };
+		D2633E131DE18FEA0075F9E1 /* feature.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2633E111DE18FEA0075F9E1 /* feature.vsh */; };
 		D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28AE39F1DD25B64009E8CDD /* wall.jpg */; };
 		D2926BD41DDC8C12004BE72B /* room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2926BD31DDC8C12004BE72B /* room.jpg */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -56,6 +58,8 @@
 		CE3B30DC16DE636010063908 /* Pods-RoomPlanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.debug.xcconfig"; sourceTree = "<group>"; };
 		D20CF9641DDF59D4009B9E10 /* GLMatrix.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLMatrix.framework; path = "../../../../Library/Developer/Xcode/DerivedData/RoomPlanner-bzcqhaxfasgzxachyqosjaaxpulr/Build/Products/Debug-iphoneos/GLMatrix/GLMatrix.framework"; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
+		D2633E101DE18FEA0075F9E1 /* feature.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = feature.fsh; sourceTree = "<group>"; };
+		D2633E111DE18FEA0075F9E1 /* feature.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = feature.vsh; sourceTree = "<group>"; };
 		D28AE39F1DD25B64009E8CDD /* wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpg; sourceTree = "<group>"; };
 		D2926BD31DDC8C12004BE72B /* room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room.jpg; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 		D2D615241DCF742D00E9C726 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				D2633E101DE18FEA0075F9E1 /* feature.fsh */,
+				D2633E111DE18FEA0075F9E1 /* feature.vsh */,
 				D2D615251DCF74B100E9C726 /* plane.vsh */,
 				D2D615271DCF74FF00E9C726 /* plane.fsh */,
 			);
@@ -268,10 +274,12 @@
 			files = (
 				D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */,
 				CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */,
+				D2633E131DE18FEA0075F9E1 /* feature.vsh in Resources */,
 				CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */,
 				D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */,
 				27AF3D301DCCD4B4005A727A /* LaunchScreen.storyboard in Resources */,
 				CD243B321DD9A9E20083FFC7 /* RoundSofa_01.jpg in Resources */,
+				D2633E121DE18FEA0075F9E1 /* feature.fsh in Resources */,
 				D2926BD41DDC8C12004BE72B /* room.jpg in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,

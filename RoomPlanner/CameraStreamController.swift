@@ -18,11 +18,11 @@ protocol CVStateListener {
 
 class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    private var currentFrame:Int = 0
     private var device: AVCaptureDevice?
     public var delegate: CVStateListener?
     internal var session: AVCaptureSession?
     public var ctx: EAGLContext?
-    public var currentFrame:Int = 0
     var backgroundQueue: DispatchQueue?
     
     override init() {
@@ -68,16 +68,14 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         let image: UIImage = OpenCV.image(from: sampleBuffer)
-        print("current frame: \(self.currentFrame)")
+        self.currentFrame += 1
+        
         if(self.currentFrame % 25 == 0) {
-            
-            
-            
             backgroundQueue!.async {
                 let processed: NSArray = OpenCV.cornerHarrisDetection(image, sobel_kernel: 3, blocksize: 8) as NSArray
-                let test = self.drawImage(image: image, data: processed)
+                //let test = self.drawImage(image: image, data: processed)
                 if self.delegate != nil {
-                    self.delegate!.onFrameReady(image: test)
+                    //self.delegate!.onFrameReady(image: test)
                     self.delegate!.onFeaturesDetected(data: processed)
                 }
             }
@@ -86,9 +84,7 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-        print("frame dropped")
-    }
+    internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {}
     
     internal func drawImage(image: UIImage, data: NSArray) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)

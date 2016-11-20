@@ -33,6 +33,17 @@ extension FloatingPoint {
     var radiansToDegrees: Self { return self * 180 / .pi }
 }
 
+struct GLPoint3 {
+    init(x: GLfloat, y:GLfloat, z:GLfloat) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    var x = GLfloat(0.0)
+    var y = GLfloat(0.0)
+    var z = GLfloat(0.0)
+}
+
 class GLHelper {
     public static func linkProgram(vertexShader: String, fragmentShader: String) -> GLuint{
         let vid = GLHelper.compileShader(shaderName: vertexShader, shaderType: GLenum(GL_VERTEX_SHADER))

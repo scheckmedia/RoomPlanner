@@ -14,6 +14,7 @@ class RenderView : GLKView, GLKViewDelegate {
     var planes : [Plane] = []
     var perspective:Mat4 = Mat4.Identity()
     var cam:Mat4 = Mat4.Identity()
+    var debugFeature: Feature?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -29,9 +30,10 @@ class RenderView : GLKView, GLKViewDelegate {
                         up: Vec3(v: (0, 1, 0)),
                         destMatrix: self.cam)
         
-        let pos = Mat4.Identity();
+        let pos = Mat4.Identity()
         let p = Plane(pos: pos)
-        planes.append(p);
+        p.aspectRatio = Float(self.frame.width / self.frame.height)
+        planes.append(p)
     }
     
     public func glkView(_ view: GLKView, drawIn rect: CGRect) {
@@ -40,7 +42,11 @@ class RenderView : GLKView, GLKViewDelegate {
         
         for p in planes {
             p.render(projection: self.perspective, view: self.cam)
-        }        
+        }
+        
+        if debugFeature != nil {
+            debugFeature!.render(projection: self.perspective, view: self.cam)
+        }
     }
     
     public func updateTexture(withImage image: UIImage) {

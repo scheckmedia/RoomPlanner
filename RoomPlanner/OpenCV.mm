@@ -127,6 +127,10 @@ static GLuint textureId;
     cv::cornerHarris(cvt, dst, block_size, k, 0.01, cv::BORDER_DEFAULT);
     cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
 
+//    cv::transpose(dst_norm, dst_norm);
+    cv::flip(dst_norm, dst_norm, 1);
+    cv::flip(dst_norm, dst_norm, 0);
+    
     // Iterate over image, push points after a determined threshold
     for(int y = 0; y < dst_norm.cols; y++)
     {
@@ -134,7 +138,8 @@ static GLuint textureId;
         {
             if((int) dst_norm.at<float>(x,y) > THRESHOLD) //Thres
             {
-                [res addObject: [NSValue valueWithCGPoint:CGPointMake(x, y)]];
+                [res addObject: [NSValue valueWithCGPoint:CGPointMake(-0.5 + x / static_cast<float>(dst_norm.rows),
+                                                                      -0.5 + y / static_cast<float>(dst_norm.cols))]];
             }
         }
     }
