@@ -46,7 +46,7 @@
         <!--Model Menu-->
         <scene sceneID="hFx-5e-lO5">
             <objects>
-                <collectionViewController id="VbM-qG-5p2" userLabel="Model Menu" sceneMemberID="viewController">
+                <collectionViewController id="VbM-qG-5p2" userLabel="Model Menu" customClass="ModelMenuController" customModule="RoomPlanner" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="4kh-Ry-xNF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
