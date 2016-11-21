@@ -21,6 +21,8 @@
 		CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD243B391DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld */; };
 		CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */; };
 		CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */; };
+		CD56AA711DE2E38800CFAF30 /* ModelMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD56AA701DE2E38800CFAF30 /* ModelMenuController.swift */; };
+		CD56AA731DE2EC6300CFAF30 /* RoundSofa.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = CD56AA721DE2EC6300CFAF30 /* RoundSofa.jpeg */; };
 		D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24868ED1DCF6A2900F74375 /* GLHelper.swift */; };
 		D2633E121DE18FEA0075F9E1 /* feature.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2633E101DE18FEA0075F9E1 /* feature.fsh */; };
 		D2633E131DE18FEA0075F9E1 /* feature.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2633E111DE18FEA0075F9E1 /* feature.vsh */; };
@@ -55,6 +57,8 @@
 		CD243B3A1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RoomPlanner.xcdatamodel; sourceTree = "<group>"; };
 		CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHelper.swift; sourceTree = "<group>"; };
+		CD56AA701DE2E38800CFAF30 /* ModelMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMenuController.swift; sourceTree = "<group>"; };
+		CD56AA721DE2EC6300CFAF30 /* RoundSofa.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundSofa.jpeg; sourceTree = "<group>"; };
 		CE3B30DC16DE636010063908 /* Pods-RoomPlanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RoomPlanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RoomPlanner/Pods-RoomPlanner.debug.xcconfig"; sourceTree = "<group>"; };
 		D20CF9641DDF59D4009B9E10 /* GLMatrix.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLMatrix.framework; path = "../../../../Library/Developer/Xcode/DerivedData/RoomPlanner-bzcqhaxfasgzxachyqosjaaxpulr/Build/Products/Debug-iphoneos/GLMatrix/GLMatrix.framework"; sourceTree = "<group>"; };
 		D24868ED1DCF6A2900F74375 /* GLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GLHelper.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				27FD093E1DD38CEB000ACF10 /* CameraStreamController.swift */,
 				CD243B3C1DD9B81D0083FFC7 /* ModelObject.swift */,
 				CD243B3E1DD9BA820083FFC7 /* DataHelper.swift */,
+				CD56AA701DE2E38800CFAF30 /* ModelMenuController.swift */,
 			);
 			path = RoomPlanner;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 		CD243B2F1DD9A82C0083FFC7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CD56AA721DE2EC6300CFAF30 /* RoundSofa.jpeg */,
 				CD243B341DD9A9EF0083FFC7 /* RoundSofa.obj */,
 			);
 			name = Models;
@@ -283,6 +289,7 @@
 				D2926BD41DDC8C12004BE72B /* room.jpg in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
+				CD56AA731DE2EC6300CFAF30 /* RoundSofa.jpeg in Resources */,
 				27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +359,7 @@
 				CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */,
 				27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */,
 				D2FEA31F1DDF059600438A11 /* RenderView.swift in Sources */,
+				CD56AA711DE2E38800CFAF30 /* ModelMenuController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
