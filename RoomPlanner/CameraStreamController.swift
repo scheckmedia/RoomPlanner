@@ -72,36 +72,16 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         
         if(self.currentFrame % 25 == 0) {
             backgroundQueue!.async {
-                let processed: NSArray = OpenCV.cornerHarrisDetection(image, sobel_kernel: 3, blocksize: 8) as NSArray
-                //let test = self.drawImage(image: image, data: processed)
+                //let processed: NSArray = OpenCV.cornerHarrisDetection(image, blocksize: 8, ksize: 3, k: 0) as NSArray
+                let processed: NSArray = OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
+            
                 if self.delegate != nil {
                     //self.delegate!.onFrameReady(image: test)
                     self.delegate!.onFeaturesDetected(data: processed)
                 }
             }
-            
-            
         }
     }
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {}
-    
-    internal func drawImage(image: UIImage, data: NSArray) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
-        
-        image.draw(at: CGPoint.zero)
-        
-        for point in data {
-            let p = point as! CGPoint
-            
-            UIColor.red.setFill()
-            UIRectFill(CGRect(x: p.x, y: p.y, width: 10, height: 10))
-        }
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-    
 }

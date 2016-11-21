@@ -16,7 +16,6 @@
 static EAGLContext *glContext = NULL;
 static GLuint textureId;
 
-
 +(void) bindContext:(EAGLContext *)ctx withTextureID:(GLuint) tid
 {
     if(ctx != NULL)
@@ -73,8 +72,6 @@ static GLuint textureId;
     // Create an image object from the Quartz image
     UIImage *image = [UIImage imageWithCGImage:quartzImage];
     
-    
-    
     if(glContext != nil)
     {
         cv::Mat imageMat, outMat;
@@ -88,18 +85,16 @@ static GLuint textureId;
         glFlush();
     }
     
-    
-    
     // Release the Quartz image
     CGImageRelease(quartzImage);
     
     return (image);
 }
 
-+(UIImage *) greyScaleFromImage:(UIImage *)image
+/*+(UIImage *) greyScaleFromImage:(UIImage *)image
 {
     return MatToUIImage([self toGreyScale:image]);
-}
+}*/
 
 +(cv::Mat) toGreyScale:(UIImage *)image
 {
@@ -114,20 +109,36 @@ static GLuint textureId;
     return greyMat;
 }
 
-+(NSArray *) cornerHarrisDetection:(UIImage *)src sobel_kernel:(int)k blocksize:(int)block_size
++(NSArray *) cornerHarrisDetection:(UIImage *)src blocksize:(int)bs ksize:(int)ksize k:(float)k
 {
-    NSMutableArray* res = [[NSMutableArray alloc] init];
-    const int THRESHOLD = 50;
-    
     cv::Mat cvt = [self toGreyScale:src];
     cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
-    cv::Mat dst_norm;
     
     // Do the corner harris - biatch
-    cv::cornerHarris(cvt, dst, block_size, k, 0.01, cv::BORDER_DEFAULT);
-    cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+    cv::cornerHarris(cvt, dst, bs, ksize, k, cv::BORDER_DEFAULT);
 
-//    cv::transpose(dst_norm, dst_norm);
+    return [self bundleDetectedData:dst];
+}
+
++(NSArray *) cannyCornerDetection:(UIImage *)src thres_1:(int)t1 thres_2:(int)t2
+{
+    cv::Mat cvt = [self toGreyScale:src];
+    cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
+    
+    // Do the canny - biatch
+    cv::Canny(cvt, dst, t1, t2);
+    
+    return [self bundleDetectedData:dst];
+}
+
++(NSArray *) bundleDetectedData:(cv::Mat)dst
+{
+    NSMutableArray* res = [[NSMutableArray alloc] init];
+    const int THRESHOLD = 150;
+    cv::Mat dst_norm;
+    
+    cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+    // cv::transpose(dst_norm, dst_norm);
     cv::flip(dst_norm, dst_norm, 1);
     cv::flip(dst_norm, dst_norm, 0);
     
@@ -136,9 +147,9 @@ static GLuint textureId;
     {
         for(int x = 0; x < dst_norm.rows; x++)
         {
-            if((int) dst_norm.at<float>(x,y) > THRESHOLD) //Thres
+            if((int) dst_norm.at<float>(x,y) > THRESHOLD)
             {
-                [res addObject: [NSValue valueWithCGPoint:CGPointMake(-0.5 + x / static_cast<float>(dst_norm.rows),
+                [res addObject:[NSValue valueWithCGPoint:CGPointMake(-0.5 + x / static_cast<float>(dst_norm.rows),
                                                                       -0.5 + y / static_cast<float>(dst_norm.cols))]];
             }
         }
@@ -146,6 +157,5 @@ static GLuint textureId;
     
     return res;
 }
-
 
 @end

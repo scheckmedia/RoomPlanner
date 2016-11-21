@@ -14,7 +14,8 @@
 
 +(void) bindContext:(EAGLContext*) ctx withTextureID:(GLuint) tid;
 +(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
-+(UIImage *) greyScaleFromImage: (UIImage *) image;
-+(NSArray *) cornerHarrisDetection:(UIImage *)src sobel_kernel:(int)k blocksize:(int)block_size;
++(NSArray *) cornerHarrisDetection:(UIImage *)src blocksize:(int)bs ksize:(int)ksize k:(float)k;
++(NSArray *) cannyCornerDetection:(UIImage *)src thres_1:(int)t1 thres_2:(int)t2;
+//+(UIImage *) greyScaleFromImage: (UIImage *) image;
 
 @end
