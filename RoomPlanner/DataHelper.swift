@@ -20,7 +20,7 @@ public class DataHelper {
     
     func seedModels() {        
         let models = [
-            (name: "Round Sofa", path: "RoundSofa.obj")
+            (name: "Round Sofa", path: "RoundSofa.obj", image: "RoundSofa.jpeg")
         ]
         
         for model in models {
