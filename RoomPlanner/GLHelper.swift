@@ -28,6 +28,32 @@ extension Vec3 {
     }
 }
 
+extension Mat4 {
+    func rotateAroundX(byAngle angle: Float) {
+        let s = GLfloat(sin(angle / 2.0))
+        let rot = Quat(x: s, y: 0.0, z: 0.0, w: GLfloat(cos(angle / 2.0)))
+        let rotmat = Mat4.Zero()
+        Mat4.fromQuat(q: rot, andOutputTo: rotmat)
+        self.multiply(with: rotmat)
+    }
+    
+    func rotateAroundY(byAngle angle: Float) {
+        let s = GLfloat(sin(angle / 2.0))
+        let rot = Quat(x: 0.0, y: s, z: 0.0, w: GLfloat(cos(angle / 2.0)))
+        let rotmat = Mat4.Zero()
+        Mat4.fromQuat(q: rot, andOutputTo: rotmat)
+        self.multiply(with: rotmat)
+    }
+    
+    func rotateAroundZ(byAngle angle: Float) {
+        let s = GLfloat(sin(angle / 2.0))
+        let rot = Quat(x: 0.0, y: 0.0, z: s, w: GLfloat(cos(angle / 2.0)))
+        let rotmat = Mat4.Zero()
+        Mat4.fromQuat(q: rot, andOutputTo: rotmat)
+        self.multiply(with: rotmat)
+    }
+}
+
 extension FloatingPoint {
     var degreesToRadians: Self { return self * .pi / 180 }
     var radiansToDegrees: Self { return self * 180 / .pi }
@@ -157,4 +183,6 @@ class GLHelper {
         destMatrix.m31 = -u.dot(eye)
         destMatrix.m32 =  f.dot(eye)
     }
+    
+    
 }

@@ -11,7 +11,7 @@ import GLKit
 import GLMatrix
 
 class RenderView : GLKView, GLKViewDelegate {
-    var planes : [Plane] = []
+    let room: Room = Room()
     var perspective:Mat4 = Mat4.Identity()
     var cam:Mat4 = Mat4.Identity()
     var debugFeature: Feature?
@@ -30,19 +30,20 @@ class RenderView : GLKView, GLKViewDelegate {
                         up: Vec3(v: (0, 1, 0)),
                         destMatrix: self.cam)
         
-        let pos = Mat4.Identity()
-        let p = Plane(pos: pos)
-        p.aspectRatio = Float(self.frame.width / self.frame.height)
-        planes.append(p)
+//        let pos = Mat4.Identity()
+//        let p = Plane(pos: pos)
+//        p.aspectRatio = Float(self.frame.width / self.frame.height)
+//        planes.append(p)
     }
     
     public func glkView(_ view: GLKView, drawIn rect: CGRect) {
         glClearColor(0.0, 0.5, 0.0, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
         
-        for p in planes {
-            p.render(projection: self.perspective, view: self.cam)
-        }
+//        for p in planes {
+//            p.render(projection: self.perspective, view: self.cam)
+//        }
+        room.render(projection: self.perspective, view: self.cam)
         
         if debugFeature != nil {
             debugFeature!.render(projection: self.perspective, view: self.cam)
@@ -50,15 +51,17 @@ class RenderView : GLKView, GLKViewDelegate {
     }
     
     public func updateTexture(withImage image: UIImage) {
-        for p in planes {            
-            p.setTexture(withImage: image)
-        }
+//        for p in planes {            
+//            p.setTexture(withImage: image)
+//        }
     }
     
     public func updateTexture(id: GLuint) {
-        for p in planes {
-            p.texture = id
-        }
+//        for p in planes {
+//            p.texture = id
+//        }
+        
+        room.updateTexture(id: id)
     }
     
 }
