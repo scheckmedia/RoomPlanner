@@ -33,12 +33,10 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     private func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        print("123lol")
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("456lol")
         return 10
     }
     
