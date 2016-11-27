@@ -41,12 +41,15 @@ class CameraViewController: GLKViewController, CVStateListener {
         rv!.drawableColorFormat = .RGBA8888
         rv!.drawableStencilFormat = .format8
         rv!.backgroundColor = UIColor.clear
+
         EAGLContext.setCurrent(rv!.context)
         rv!.setup()
                 
         glGenTextures(1, &self.videoTextureId)
         OpenCV.bindContext(rv!.context, withTextureID: self.videoTextureId)
-        self.rv!.updateTexture(id: self.videoTextureId)
+        
+        EAGLContext.setCurrent(rv!.context)
+        rv?.updateTexture(id: self.videoTextureId)
         
     }
     
@@ -83,7 +86,7 @@ class CameraViewController: GLKViewController, CVStateListener {
             }
             
             let f = Feature(points: points)
-            f.aspectRatio = GLfloat(720.0 / 1280.0)
+            f.aspectRatio = GLfloat(1280.0 / 720.0)
             //f.modelPosition.scale(by: Vec4(v:(aspectRatio, GLfloat(1.0), GLfloat(1.0), GLfloat(1.0))))
             //f.modelPosition.translate(by: Vec3(v: (-1.0, -0.5, 0)))
             self.rv!.debugFeature = f

@@ -6,8 +6,8 @@ uniform sampler2D tex;
 varying vec3 normal_pos;
 varying vec3 vertex_pos;
 
-const vec3 light_pos = vec3(0.0,0.0,1.0);
-const vec3 ambient_color = vec3(0.5, 0.5, 0.5);
+const vec3 light_pos = vec3(0.0,1.0,0.0);
+const vec3 ambient_color = vec3(0.1, 0.1, 0.1);
 const vec3 diffuse_color = vec3(0.0, 0.0, 0.0);
 const vec3 spec_color = vec3(1.0, 1.0, 1.0);
 const float shininess = 16.0;
@@ -41,5 +41,5 @@ void main(void)
     // have been linearized, i.e. have no gamma correction in them)
     vec3 color_gamma_corrected = pow(color_linear, vec3(1.0/screen_gamma));
     
-    gl_FragColor = tex_color;
+    gl_FragColor = vec4(color_gamma_corrected, 1.0) + tex_color;
 }

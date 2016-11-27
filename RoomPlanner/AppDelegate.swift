@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let dataHelper = DataHelper(context: self.managedObjectContext)
         dataHelper.seedModels()
-        
-        
+    
         // TODO: Do what ever you want with the seeded data
         print(ModelObject.all()!.first?.value(forKey: "name"))
         print(ModelObject.all()!.first?.value(forKey: "path"))

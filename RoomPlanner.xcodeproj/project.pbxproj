@@ -31,7 +31,9 @@
 		D2ABD3971DE1EC0400E7B907 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD3961DE1EC0400E7B907 /* Feature.swift */; };
 		D2ABD3991DE1EC4500E7B907 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD3981DE1EC4500E7B907 /* Plane.swift */; };
 		D2ABD39B1DE1ECA000E7B907 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD39A1DE1ECA000E7B907 /* Room.swift */; };
-		D2ABD39E1DE1F0D900E7B907 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD39D1DE1F0D900E7B907 /* Model.swift */; };
+		D2ABD39E1DE1F0D900E7B907 /* Furniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD39D1DE1F0D900E7B907 /* Furniture.swift */; };
+		D2CA30791DE85B20001B87F0 /* model.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30771DE85B20001B87F0 /* model.fsh */; };
+		D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30781DE85B20001B87F0 /* model.vsh */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
 		D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615271DCF74FF00E9C726 /* plane.fsh */; };
 		D2E079FB1DCF30B5002C38E1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */; };
@@ -73,9 +75,11 @@
 		D2ABD3961DE1EC0400E7B907 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		D2ABD3981DE1EC4500E7B907 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		D2ABD39A1DE1ECA000E7B907 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		D2ABD39D1DE1F0D900E7B907 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		D2ABD39D1DE1F0D900E7B907 /* Furniture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Furniture.swift; sourceTree = "<group>"; };
+		D2CA30771DE85B20001B87F0 /* model.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.fsh; sourceTree = "<group>"; };
+		D2CA30781DE85B20001B87F0 /* model.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.vsh; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
-		D2D615271DCF74FF00E9C726 /* plane.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = plane.fsh; sourceTree = "<group>"; };
+		D2D615271DCF74FF00E9C726 /* plane.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.fsh; sourceTree = "<group>"; };
 		D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2E079FC1DCF3111002C38E1 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D2E079FE1DCF46CF002C38E1 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
@@ -203,7 +207,7 @@
 				D2ABD3961DE1EC0400E7B907 /* Feature.swift */,
 				D2ABD3981DE1EC4500E7B907 /* Plane.swift */,
 				D2ABD39A1DE1ECA000E7B907 /* Room.swift */,
-				D2ABD39D1DE1F0D900E7B907 /* Model.swift */,
+				D2ABD39D1DE1F0D900E7B907 /* Furniture.swift */,
 			);
 			name = GL;
 			sourceTree = "<group>";
@@ -211,6 +215,8 @@
 		D2D615241DCF742D00E9C726 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				D2CA30771DE85B20001B87F0 /* model.fsh */,
+				D2CA30781DE85B20001B87F0 /* model.vsh */,
 				D2633E101DE18FEA0075F9E1 /* feature.fsh */,
 				D2633E111DE18FEA0075F9E1 /* feature.vsh */,
 				D2D615251DCF74B100E9C726 /* plane.vsh */,
@@ -269,7 +275,7 @@
 				TargetAttributes = {
 					27AF3D1F1DCCD4B4005A727A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 3LPDW8B3J9;
+						DevelopmentTeam = J7A78EAU6M;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -300,6 +306,7 @@
 			files = (
 				D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */,
 				CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */,
+				D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */,
 				D2633E131DE18FEA0075F9E1 /* feature.vsh in Resources */,
 				CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */,
 				D28AE3A01DD25B64009E8CDD /* wall.jpg in Resources */,
@@ -309,6 +316,7 @@
 				D2926BD41DDC8C12004BE72B /* room.jpg in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
+				D2CA30791DE85B20001B87F0 /* model.fsh in Resources */,
 				CD56AA731DE2EC6300CFAF30 /* RoundSofa.jpeg in Resources */,
 				27AF3D2B1DCCD4B4005A727A /* Main.storyboard in Resources */,
 			);
@@ -376,7 +384,7 @@
 				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
 				D2ABD3971DE1EC0400E7B907 /* Feature.swift in Sources */,
 				D2ABD39B1DE1ECA000E7B907 /* Room.swift in Sources */,
-				D2ABD39E1DE1F0D900E7B907 /* Model.swift in Sources */,
+				D2ABD39E1DE1F0D900E7B907 /* Furniture.swift in Sources */,
 				CD243B3F1DD9BA820083FFC7 /* DataHelper.swift in Sources */,
 				27016C421DD12420004D98C3 /* OpenCV.mm in Sources */,
 				CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */,
@@ -509,7 +517,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3LPDW8B3J9;
+				DEVELOPMENT_TEAM = J7A78EAU6M;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
@@ -517,7 +525,7 @@
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanner;
+				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanners;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -534,7 +542,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 3LPDW8B3J9;
+				DEVELOPMENT_TEAM = J7A78EAU6M;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
@@ -542,7 +550,7 @@
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanner;
+				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanners;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoomPlanner/RoomPlanner-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

@@ -18,22 +18,18 @@ class Plane: Renderable {
     var program : GLuint?
     var posid: GLuint = GLuint()
     var uvid:GLuint = GLuint()
-    var aspectRatio:Float = 1.0 {
-        didSet {
-            self.modelPosition.scale(by: Vec4(v: (aspectRatio, 1, 1, 0)))
-        }
-    }
+    var normalid:GLuint = GLuint()
     
     var vertices: [Vertex]? = nil
     
     private static let defaults : [Vertex] = [
-        Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0)),
-        Vertex(position: (x:  0.5, y:  0.5, z: 0), uv: (x: 1.0, y: 1.0)),
-        Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0)),
+        Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0), normal: (0.0, 0.0, -0.5)),
+        Vertex(position: (x:  0.5, y:  0.5, z: 0), uv: (x: 1.0, y: 1.0), normal: (0.0, 0.0, -0.5)),
+        Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0), normal: (0.0, 0.0, -0.5)),
         
-        Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0)),
-        Vertex(position: (x: -0.5, y: -0.5, z: 0), uv: (x: 0.0, y: 0.0)),
-        Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0))
+        Vertex(position: (x:  0.5, y: -0.5, z: 0), uv: (x: 1.0, y: 0.0), normal: (0.0, 0.0, -0.5)),
+        Vertex(position: (x: -0.5, y: -0.5, z: 0), uv: (x: 0.0, y: 0.0), normal: (0.0, 0.0, -0.5)),
+        Vertex(position: (x: -0.5, y:  0.5, z: 0), uv: (x: 0.0, y: 1.0), normal: (0.0, 0.0, -0.5))
     ]
     
     init(pos:Mat4, vertices : [Vertex] ) {
@@ -41,6 +37,7 @@ class Plane: Renderable {
         self.program = GLHelper.linkProgram(vertexShader: "plane.vsh", fragmentShader: "plane.fsh")
         self.posid = GLuint(glGetAttribLocation(program!, "position"))
         self.uvid = GLuint(glGetAttribLocation(program!, "uv_coord"))
+        self.normalid = GLuint(glGetAttribLocation(program!, "normals"))
         self.vertices = vertices
         createData()
     }
@@ -65,11 +62,14 @@ class Plane: Renderable {
         
         glEnableVertexAttribArray(posid)
         glEnableVertexAttribArray(uvid)
+        glEnableVertexAttribArray(normalid)
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo)
         glVertexAttribPointer(posid, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<Vertex>.size), nil)
         glVertexAttribPointer(uvid, 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE),
                               GLsizei(MemoryLayout<Vertex>.size), BUFFER_OFFSET(n: 3 * MemoryLayout<GLfloat>.size))
+        glVertexAttribPointer(normalid, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE),
+                              GLsizei(MemoryLayout<Vertex>.size), BUFFER_OFFSET(n: 5 * MemoryLayout<GLfloat>.size))
         
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), 0)
@@ -85,11 +85,15 @@ class Plane: Renderable {
             glUseProgram(self.program!)
         }
         
-        let mvp = Mat4.Zero()
-        view.multiply(with: modelPosition, andOutputTo: mvp)
-        projection.multiply(with: mvp, andOutputTo: mvp)
+        let modelView = Mat4.Zero()
+        let normalMatrix = Mat4.Zero()
+        view.multiply(with: modelPosition, andOutputTo: modelView)
+        modelView.invert(andOutputTo: normalMatrix)
+        normalMatrix.transpose()
         
-        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "projection")), 1, GLboolean(GL_FALSE), projection)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "model_view")), 1, GLboolean(GL_FALSE), modelView)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "normal_matrix")), 1, GLboolean(GL_FALSE), normalMatrix)
         
         if self.texture != nil {
             glActiveTexture(GLenum(GL_TEXTURE0))

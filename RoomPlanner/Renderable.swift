@@ -17,5 +17,6 @@ protocol Renderable {
 struct Vertex {
     var position : (x: GLfloat, y: GLfloat, z: GLfloat)
     var uv : (x: GLfloat, y: GLfloat)
+    var normal: (x: GLfloat, y: GLfloat, z: GLfloat)
 }
 

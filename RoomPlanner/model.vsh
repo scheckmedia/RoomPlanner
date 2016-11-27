@@ -14,6 +14,7 @@ varying vec3 vertex_pos;
 void main(void)
 {
     gl_Position = projection * model_view * vec4(position, 1.0);
+    gl_PointSize = 10.0;
     uv = uv_coord;
     
     vec4 pos = model_view * vec4(position, 1.0);

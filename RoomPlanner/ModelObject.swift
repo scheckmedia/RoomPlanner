@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+
 class ModelObject {
     class func all() -> [NSManagedObject]? {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

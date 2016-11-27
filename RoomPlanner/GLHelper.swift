@@ -85,6 +85,11 @@ class GLHelper {
         glGetProgramiv(pid, GLenum(GL_LINK_STATUS), &linkSuccess)
         if (linkSuccess == GL_FALSE) {
             print("Failed to create shader program!")
+            var message = [CChar](repeating: CChar(0), count: 256)
+            var length = GLsizei(0)
+            glGetProgramInfoLog(pid, 256, &length, &message)
+            
+            print(String(utf8String: message))
             // TODO: Actually output the error that we can get from the glGetProgramInfoLog function.
             return 0
         }
@@ -127,6 +132,8 @@ class GLHelper {
             let errMsg = NSString(bytes: infoLog, length: Int(infoLogLength),
                                   encoding: String.Encoding.ascii.rawValue)
             print("Error: \(errMsg)")
+            
+            
             return 0
         }
         return shaderHandle
