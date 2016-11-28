@@ -26,10 +26,10 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
 //    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) 
-    cell.backgroundColor = UIColor.red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath)
+        cell.backgroundColor = UIColor.red
     
-    return cell
+        return cell
     }
     
     private func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -37,7 +37,11 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        if let models = ModelObject.all() {
+            return models.count
+        } else {
+            return 0
+        }
     }
     
 }
