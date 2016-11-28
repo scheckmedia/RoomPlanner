@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    var activeModels: [String] = []
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath)
         
@@ -27,6 +29,7 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
             let image:UIImage = UIImage(named: imageFileName as! String)!
             
             imageview.image = image
+            cell.layer.setValue(model.value(forKey: "path"), forKey: "modelPath")
             cell.contentView.addSubview(imageview)
             cell.contentView.alpha = 0.5
         }
@@ -48,11 +51,23 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
+            let modelPath = cell.layer.value(forKey: "modelPath") as! String
+
             if cell.contentView.alpha != 1 {
                 cell.contentView.alpha = 1
+                activeModels.append(modelPath)
             } else {
                 cell.contentView.alpha = 0.5
+                activeModels = activeModels.filter() { $0 != modelPath }
             }
+            
+            UserDefaults.standard.set(
+                activeModels, forKey: "activeModels"
+            )
+            
+            // TODO: Remove later and use to evaluate active models
+            print("Active Models are:")
+            print(UserDefaults.standard.value(forKey: "activeModels") ?? "")
         }
     }
 }
