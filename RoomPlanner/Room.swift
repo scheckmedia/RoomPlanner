@@ -23,9 +23,8 @@ class Room : Renderable{
         //walls.append(front)
         
         f = Furniture(path: ModelObject.all()!.first?.value(forKey: "path") as! String)
-        f!.modelPosition.scale(by: Vec4(v: (aspectRatio, 1, 1, 1)))
-        f!.modelPosition.rotateAroundY(byAngle: Float(45.0).degreesToRadians)
-        f!.modelPosition.translate(by: Vec3(v: (0.0, 0.0, -2.0)))
+        //f!.modelPosition.scale(by: Vec4(v: (aspectRatio, 1, 1, 1)))
+        f!.modelPosition.translate(by: Vec3(v: (0.0, -0.5, -2.0)))
 //        let left = Plane(pos: .Identity())
 //        left.modelPosition.rotateAroundY(byAngle: Float(90.0.degreesToRadians))
 //        left.modelPosition.translate(by: Vec3(v:(-0.5,0,0)))

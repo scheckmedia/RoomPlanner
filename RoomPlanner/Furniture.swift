@@ -21,6 +21,7 @@ class Furniture : Renderable{
     var uvid:GLuint = GLuint()
     var normalid:GLuint = GLuint()
     var mesh: GLKMesh?
+    var rot = Float(0.0)
     
     init(path: String) {
         modelPosition = Mat4.Identity()
@@ -88,17 +89,27 @@ class Furniture : Renderable{
         glBindVertexArray(0)
     }
     
-    func BUFFER_OFFSET(n: Int) -> UnsafeRawPointer {
+    func BUFFER_OFFSET(n: Int) -> UnsafeRawPointer? {
+        if(n == 0) {
+            return nil
+        }
+        
         return UnsafeRawPointer(bitPattern: n)!
     }
     
     func render(projection: Mat4, view: Mat4) {
+        glEnable(GLenum(GL_CULL_FACE))
+        glCullFace(GLenum(GL_FRONT_AND_BACK))
         
-        //glCullFace(GLenum(GL_FRONT_AND_BACK))
+        rot += 0.01
+        let pos = Mat4.Zero()
+        modelPosition.multiply(with: Mat4.Identity(), andOutputTo: pos)
+        pos.rotateAroundY(byAngle: rot)
+        
         glUseProgram(self.program!)
         let modelView = Mat4.Zero()
         let normalMatrix = Mat4.Zero()
-        view.multiply(with: modelPosition, andOutputTo: modelView)
+        view.multiply(with: pos, andOutputTo: modelView)
         modelView.invert(andOutputTo: normalMatrix)
         normalMatrix.transpose()
         
@@ -111,7 +122,8 @@ class Furniture : Renderable{
         if let m = mesh {
             for sm in m.submeshes {
                 glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), sm.elementBuffer.glBufferName)
-                glDrawElements(GLenum(GL_TRIANGLES), sm.elementCount, sm.type, nil)
+                glDrawElements(GLenum(GL_TRIANGLES), sm.elementCount, sm.type, BUFFER_OFFSET(n: sm.elementBuffer.offset))
+                
             }
         }
         glBindVertexArray(0)

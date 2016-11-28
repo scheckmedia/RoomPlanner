@@ -22,7 +22,7 @@ class RenderView : GLKView, GLKViewDelegate {
     }
     
     public func setup() {
-        let aspect = GLfloat(1280.0/720.0)
+        let aspect = GLfloat(720.0 / 1280.0)
         
         let w = self.frame.width / 720
         let h = self.frame.height / 1280.0
@@ -34,6 +34,9 @@ class RenderView : GLKView, GLKViewDelegate {
                         up: Vec3(v: (0, 1, 0)),
                         destMatrix: self.cam)
         room = Room(scale: Float(scale))
+        
+        glEnable(GLenum(GL_DEPTH_TEST))
+        
 //        let pos = Mat4.Identity()
 //        let p = Plane(pos: pos)
 //        p.aspectRatio = Float(self.frame.width / self.frame.height)
