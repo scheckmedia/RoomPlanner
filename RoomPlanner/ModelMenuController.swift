@@ -10,25 +10,27 @@ import Foundation
 import UIKit
 
 class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
-//    func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath)
-//        let imageview:UIImageView = UIImageView(frame: CGRect(x: 50, y: 50, width: self.view.frame.width - 200, height: 50))
-//        
-//        let model = ModelObject.all()?[indexPath.row]
-//        print(ModelObject.all())
-//        print(model ?? "")
-//        let image:UIImage = UIImage(named: "")!
-//        imageview.image = image
-//        cell.contentView.addSubview(imageview)
-//        
-//        return cell
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath)
-        cell.backgroundColor = UIColor.red
-    
+        
+        if let model = ModelObject.all()?[indexPath.row] {
+            let imageview:UIImageView = UIImageView(
+                frame: CGRect(
+                    x: 0,
+                    y: 0,
+                    width: 100,
+                    height: 100
+                )
+            )
+            
+            let imageFileName = model.value(forKey: "image")
+            let image:UIImage = UIImage(named: imageFileName as! String)!
+            
+            imageview.image = image
+            cell.contentView.addSubview(imageview)
+            cell.contentView.alpha = 0.5
+        }
+
         return cell
     }
     
@@ -44,4 +46,13 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            if cell.contentView.alpha != 1 {
+                cell.contentView.alpha = 1
+            } else {
+                cell.contentView.alpha = 0.5
+            }
+        }
+    }
 }

@@ -30,6 +30,7 @@ public class DataHelper {
             
             newModel.name = model.name
             newModel.path = model.path
+            newModel.image = model.image
         }
     
         do {
