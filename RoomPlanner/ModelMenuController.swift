@@ -64,10 +64,6 @@ class ModelMenuController: UIViewController, UICollectionViewDelegate, UICollect
             UserDefaults.standard.set(
                 activeModels, forKey: "activeModels"
             )
-            
-            // TODO: Remove later and use to evaluate active models
-            print("Active Models are:")
-            print(UserDefaults.standard.value(forKey: "activeModels") ?? "")
         }
     }
 }

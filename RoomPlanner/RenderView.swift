@@ -59,8 +59,10 @@ class RenderView : GLKView, GLKViewDelegate {
         let camera = self.cam
         
         if let d = manager?.deviceMotion?.attitude {
-            let q = Quat(x: Float(d.quaternion.x - 0.785398), y: Float(d.quaternion.y),
-                         z: Float(d.quaternion.z), w: Float(d.quaternion.w))
+            let q = Quat(x: Float(d.quaternion.x - 0.78539816339),
+                         y: Float(d.quaternion.y),
+                         z: Float(d.quaternion.z),
+                         w: Float(d.quaternion.w))
             
             let eye = Vec3(v:(0,0, 1))
             eye.transform(with: q)
@@ -81,5 +83,7 @@ class RenderView : GLKView, GLKViewDelegate {
     public func updateTexture(id: GLuint) {
         room!.updateTexture(id: id)
     }
+    
+    
     
 }

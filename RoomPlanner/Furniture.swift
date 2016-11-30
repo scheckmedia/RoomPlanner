@@ -23,9 +23,8 @@ class Furniture : Renderable{
     var mesh: GLKMesh?
     var rot = Float(0.0)
     
-    init(path: String) {
-        modelPosition = Mat4.Identity()
-        
+    init(pos:Mat4, path: String) {
+        modelPosition = pos        
         self.program = GLHelper.linkProgram(vertexShader: "model.vsh", fragmentShader: "model.fsh")
         
         let alloc = GLKMeshBufferAllocator.init()

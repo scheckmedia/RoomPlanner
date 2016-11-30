@@ -53,6 +53,9 @@ class CameraViewController: GLKViewController, CVStateListener {
         
     }
     
+    
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -72,7 +75,6 @@ class CameraViewController: GLKViewController, CVStateListener {
         // Dispose of any resources that can be recreated.
     }
     
-    //func update() {}
     
     func onFrameReady(image: UIImage) {}
     
@@ -92,5 +94,35 @@ class CameraViewController: GLKViewController, CVStateListener {
             self.rv!.debugFeature = f
         }
     }
+    
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+        if let activeModels = UserDefaults.standard.value(forKey: "activeModels") as? Array<String> {
+            if(activeModels.count == 0) {
+                return;
+            }
+            
+            
+            
+            self.rv?.room?.updateModel(path: activeModels[0] )
+        }
+    }
+    
+    @IBAction func handlePan(_ sender: UIPanGestureRecognizer) {
+        print("\(sender.velocity(in: self.rv!))")
+        let translate = sender.translation(in: self.rv!)
+        let x = translate.x
+        let y = translate.y
+        let delta = CGFloat(1.0)
+        let dx = (delta * (x / delta) / self.view.frame.width)
+        let dy = (delta * (y / delta) / (self.view.frame.height / 2.0))
+        print("t: \(translate) --> \(dx), \(dy)")
+        
+        if let model = self.rv?.room?.f {
+            model.modelPosition.translate(by: Vec3(v: (GLfloat(dx), 0.0, GLfloat(dy))))
+        }
+        
+        sender.setTranslation(CGPoint.zero, in: self.rv!)
+    }
+    
 }
 

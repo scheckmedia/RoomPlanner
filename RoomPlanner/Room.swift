@@ -15,16 +15,17 @@ class Room : Renderable{
     var texture:GLuint?
     var walls = [Plane]()
     var aspectRatio = GLfloat(1280.0 / 720.0)
-    let f: Furniture?
+    var f: Furniture?
     init(scale: Float) {
         let front = Plane(pos: .Identity())
         front.modelPosition.scale(by: Vec4(
             v: (aspectRatio, 1, 1, 1)))
         //walls.append(front)
         
-        f = Furniture(path: ModelObject.all()!.first?.value(forKey: "path") as! String)
-        //f!.modelPosition.scale(by: Vec4(v: (aspectRatio, 1, 1, 1)))
-        f!.modelPosition.translate(by: Vec3(v: (0.0, -0.5, -2.0)))
+        let furniturePos = Mat4.Identity()
+        furniturePos.translate(by: Vec3(v: (0.0, -0.5, -2.0)))
+        
+        f = Furniture(pos: furniturePos, path: ModelObject.all()!.first?.value(forKey: "path") as! String)
 //        let left = Plane(pos: .Identity())
 //        left.modelPosition.rotateAroundY(byAngle: Float(90.0.degreesToRadians))
 //        left.modelPosition.translate(by: Vec3(v:(-0.5,0,0)))
@@ -54,19 +55,14 @@ class Room : Renderable{
         
     }
     
-    func addWall(topLef tl:GLPoint3, topRight tr:GLPoint3, bl:GLPoint3, br:GLPoint3) {
-//        let coords : [Vertex] = [
-//            Vertex(position: (x:  tl.x, y:  tl.y, z: tl.z), uv: (x: 0.0, y: 1.0)),
-//            Vertex(position: (x:  bl.x, y:  bl.y, z: bl.z), uv: (x: 1.0, y: 1.0)),
-//            Vertex(position: (x:  br.x, y:  br.y, z: br.z), uv: (x: 1.0, y: 0.0)),
-//            
-//            Vertex(position: (x:  br.x, y:  br.y, z: br.z), uv: (x: 1.0, y: 0.0)),
-//            Vertex(position: (x:  tr.x, y:  tr.y, z: tr.z), uv: (x: 0.0, y: 0.0)),
-//            Vertex(position: (x:  tl.x, y:  tl.y, z: tl.z), uv: (x: 0.0, y: 1.0))
-//        ]
-//        
-//        let p = Plane(pos: Mat4.Identity(), vertices: coords)
-//        walls.append(p)
+    public func updateModel(path: String) {
+        var oldPos = Mat4.Identity()
+        
+        if let old = f {
+            oldPos = old.modelPosition
+        }
+        
+        f = Furniture(pos: oldPos, path: path)
     }
     
 }

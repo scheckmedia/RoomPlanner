@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MMW-jh-UFv">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MMW-jh-UFv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mOz-6s-ewX" appends="YES" id="3hl-BS-P1q"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <navigationItem key="navigationItem" title="Camera" id="Jqf-gJ-fBa">
@@ -30,7 +35,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="+"/>
                                 <connections>
-                                    <segue destination="VbM-qG-5p2" kind="show" id="j3t-zs-WJ7"/>
+                                    <segue destination="VbM-qG-5p2" kind="show" identifier="CameraToModelSelector" id="j3t-zs-WJ7"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -40,6 +45,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="mOz-6s-ewX">
+                    <connections>
+                        <action selector="handlePan:" destination="9pv-A4-QxB" id="dc6-5J-7go"/>
+                        <outlet property="delegate" destination="9pv-A4-QxB" id="n1v-Te-c0b"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
@@ -47,7 +58,7 @@
         <scene sceneID="hFx-5e-lO5">
             <objects>
                 <collectionViewController id="VbM-qG-5p2" userLabel="Model Menu" customClass="ModelMenuController" customModule="RoomPlanner" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="4kh-Ry-xNF">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="4kh-Ry-xNF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -73,8 +84,18 @@
                             <outlet property="delegate" destination="VbM-qG-5p2" id="vht-Qb-ieW"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Select Model" id="Fae-MO-Cf5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="lQB-Go-pcL">
+                            <connections>
+                                <segue destination="kMx-1n-71o" kind="unwind" unwindAction="unwindToRootViewControllerWithSegue:" id="cEH-kD-exV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8w7-9Q-dpq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="kMx-1n-71o" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1520.8" y="-321.58920539730138"/>
         </scene>
