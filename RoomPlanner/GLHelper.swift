@@ -52,6 +52,12 @@ extension Mat4 {
         Mat4.fromQuat(q: rot, andOutputTo: rotmat)
         self.multiply(with: rotmat)
     }
+    
+    func rotate(with quaternion: Quat) {        
+        let rotmat = Mat4.Zero()
+        Mat4.fromQuat(q: quaternion, andOutputTo: rotmat)
+        self.multiply(with: rotmat)
+    }
 }
 
 extension FloatingPoint {
@@ -137,6 +143,24 @@ class GLHelper {
             return 0
         }
         return shaderHandle
+    }
+    
+    public static func glOrtho(left:Float, right:Float,
+                               top:Float, bottom:Float, near:Float, far:Float) -> Mat4{
+        let destMatrix = Mat4.Zero()
+        destMatrix.m00 = 2.0 / (right - left)
+        destMatrix.m03 = -(right + left) / (right - left)
+        
+        destMatrix.m11 = 2.0 / (top - bottom)
+        destMatrix.m13 = -(top + bottom) / (top - bottom)
+        
+        destMatrix.m22 = -2.0 / (far - near)
+        destMatrix.m23 = -(far + near) / (far - near)
+        
+        destMatrix.m33 = 1.0
+        
+        return destMatrix
+        
     }
     
     public static func glPerspective(destMatrix:Mat4, fov:Float, aspectRatio:Float, near:Float, far:Float) {

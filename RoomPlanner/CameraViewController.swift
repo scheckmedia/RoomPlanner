@@ -46,7 +46,6 @@ class CameraViewController: GLKViewController, CVStateListener {
         rv!.drawableDepthFormat = .format24
         rv!.drawableColorFormat = .RGBA8888
         rv!.drawableStencilFormat = .format8
-        rv!.backgroundColor = UIColor.clear
 
         EAGLContext.setCurrent(rv!.context)
         rv!.setup()
@@ -93,10 +92,11 @@ class CameraViewController: GLKViewController, CVStateListener {
                 points.append(pp)
             }
             
+            let pos = Mat4(m: self.rv!.stage!.modelPosition.m)
             let f = Feature(points: points)
             f.aspectRatio = GLfloat(1280.0 / 720.0)
-            //f.modelPosition.scale(by: Vec4(v:(aspectRatio, GLfloat(1.0), GLfloat(1.0), GLfloat(1.0))))
-            //f.modelPosition.translate(by: Vec3(v: (-1.0, -0.5, 0)))
+            pos.translate(by: Vec3(v: (0.0, 0.0, 0.1)))
+            f.modelPosition = pos
             self.rv!.debugFeature = f
         }
     }
@@ -107,7 +107,7 @@ class CameraViewController: GLKViewController, CVStateListener {
                 return;
             }
             
-            self.rv?.room?.updateModel(path: activeModels[0] )
+            self.rv?.updateModel(path: activeModels[0] )
         }
     }
     
@@ -120,7 +120,7 @@ class CameraViewController: GLKViewController, CVStateListener {
         let dy = (delta * (y / delta) / (self.view.frame.height / 2.0))
         //print("t: \(translate) --> \(dx), \(dy)")
         
-        if let model = self.rv?.room?.f {
+        if let model = self.rv?.furniture {
             if(mode == .TRANSLATION) {
                 model.modelPosition.translate(by: Vec3(v: (GLfloat(dx), 0.0, GLfloat(dy))))
             } else {

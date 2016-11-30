@@ -68,13 +68,10 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         let image: UIImage = OpenCV.image(from: sampleBuffer)
-        return
-            
-        self.currentFrame += 1
         
+        self.currentFrame += 1
         if(self.currentFrame % 50 == 0) {
             backgroundQueue!.async {
-                //let processed: NSArray = OpenCV.cornerHarrisDetection(image, blocksize: 8, ksize: 3, k: 0) as NSArray
                 let start = DispatchTime.now()
                 let processed: NSArray = OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
                 let end = DispatchTime.now()

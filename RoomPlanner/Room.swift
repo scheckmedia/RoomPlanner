@@ -22,10 +22,7 @@ class Room : Renderable{
             v: (aspectRatio, 1, 1, 1)))
         //walls.append(front)
         
-        let furniturePos = Mat4.Identity()
-        furniturePos.translate(by: Vec3(v: (0.0, -0.75, -2.0)))
         
-        f = Furniture(pos: furniturePos, path: ModelObject.all()!.first?.value(forKey: "path") as! String)
 //        let left = Plane(pos: .Identity())
 //        left.modelPosition.rotateAroundY(byAngle: Float(90.0.degreesToRadians))
 //        left.modelPosition.translate(by: Vec3(v:(-0.5,0,0)))
