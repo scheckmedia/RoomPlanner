@@ -96,19 +96,11 @@ class Furniture : Renderable{
         return UnsafeRawPointer(bitPattern: n)!
     }
     
-    func render(projection: Mat4, view: Mat4) {
-        glEnable(GLenum(GL_CULL_FACE))
-        glCullFace(GLenum(GL_FRONT_AND_BACK))
-        
-        rot += 0.01
-        let pos = Mat4.Zero()
-        modelPosition.multiply(with: Mat4.Identity(), andOutputTo: pos)
-        pos.rotateAroundY(byAngle: rot)
-        
+    func render(projection: Mat4, view: Mat4) {    
         glUseProgram(self.program!)
         let modelView = Mat4.Zero()
         let normalMatrix = Mat4.Zero()
-        view.multiply(with: pos, andOutputTo: modelView)
+        view.multiply(with: modelPosition, andOutputTo: modelView)
         modelView.invert(andOutputTo: normalMatrix)
         normalMatrix.transpose()
         

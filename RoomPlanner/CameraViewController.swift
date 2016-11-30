@@ -11,14 +11,20 @@ import AVFoundation
 import GLKit
 import GLMatrix
 
+
 class CameraViewController: GLKViewController, CVStateListener {
     
-    //@IBOutlet weak var imageView: UIImageView!
+    enum EditorMode {
+        case TRANSLATION, ROTATION
+    }
+
+    
     @IBOutlet weak var renderView: RenderView!
     private var cameraStream: CameraStreamController?
     private var preview: AVCaptureVideoPreviewLayer?
     var rv:RenderView? = nil
     var videoTextureId = GLuint()
+    var mode = EditorMode.TRANSLATION
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,27 +107,38 @@ class CameraViewController: GLKViewController, CVStateListener {
                 return;
             }
             
-            
-            
             self.rv?.room?.updateModel(path: activeModels[0] )
         }
     }
     
     @IBAction func handlePan(_ sender: UIPanGestureRecognizer) {
-        print("\(sender.velocity(in: self.rv!))")
         let translate = sender.translation(in: self.rv!)
         let x = translate.x
         let y = translate.y
         let delta = CGFloat(1.0)
         let dx = (delta * (x / delta) / self.view.frame.width)
         let dy = (delta * (y / delta) / (self.view.frame.height / 2.0))
-        print("t: \(translate) --> \(dx), \(dy)")
+        //print("t: \(translate) --> \(dx), \(dy)")
         
         if let model = self.rv?.room?.f {
-            model.modelPosition.translate(by: Vec3(v: (GLfloat(dx), 0.0, GLfloat(dy))))
+            if(mode == .TRANSLATION) {
+                model.modelPosition.translate(by: Vec3(v: (GLfloat(dx), 0.0, GLfloat(dy))))
+            } else {
+                let angle = CGFloat.pi * dx
+                let rot = Float(copysign(angle, sender.velocity(in: self.rv!).x))
+                model.modelPosition.rotateAroundY(byAngle: rot)
+            }
         }
         
         sender.setTranslation(CGPoint.zero, in: self.rv!)
+    }
+    
+    @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+        if mode == .TRANSLATION {
+            mode = .ROTATION
+        } else {
+            mode = .TRANSLATION
+        }
     }
     
 }

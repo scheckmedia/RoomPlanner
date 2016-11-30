@@ -23,7 +23,7 @@ class Room : Renderable{
         //walls.append(front)
         
         let furniturePos = Mat4.Identity()
-        furniturePos.translate(by: Vec3(v: (0.0, -0.5, -2.0)))
+        furniturePos.translate(by: Vec3(v: (0.0, -0.75, -2.0)))
         
         f = Furniture(pos: furniturePos, path: ModelObject.all()!.first?.value(forKey: "path") as! String)
 //        let left = Plane(pos: .Identity())

@@ -24,6 +24,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="mOz-6s-ewX" appends="YES" id="3hl-BS-P1q"/>
+                            <outletCollection property="gestureRecognizers" destination="Zhu-XF-ou2" appends="YES" id="lhD-hX-ISI"/>
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
@@ -51,6 +52,11 @@
                         <outlet property="delegate" destination="9pv-A4-QxB" id="n1v-Te-c0b"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="Zhu-XF-ou2">
+                    <connections>
+                        <action selector="handleDoubleTap:" destination="9pv-A4-QxB" id="Cek-BC-UkG"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
         </scene>
