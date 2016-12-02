@@ -131,6 +131,88 @@ static GLuint textureId;
     return [self bundleDetectedData:dst];
 }
 
++(NSArray *)detectFeatures:(UIImage *)src {
+    cv::Mat cvt = [self toGreyScale:src];
+    cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
+    std::vector<cv::Vec4i> lines;
+    
+    
+    cv::Canny(cvt, dst, 10, 100);
+    cv::HoughLinesP(dst, lines, 1, M_PI / 180, 80, 150, 100);
+    
+    std::map<float, int> angles;
+    for (int i = 0; i < lines.size(); i++) {
+        cv::Vec4i line = lines.at(i);
+    
+        CGPoint p1 = CGPointMake(line[0], line[1]);
+        CGPoint p2 = CGPointMake(line[2], line[3]);
+        
+        int dy = p2.y - p1.y;
+        int dx = p2.y - p1.x;
+        
+        float angle = atan2(dy, dx)  * 180 / M_PI;
+        float delta = 5.0;
+        float qangle = delta * floor((angle / delta) * 0.5);
+        
+        if(angles.count(qangle) == false)
+        {
+            angles.insert(std::pair<float, int>(qangle, 0));
+        }
+        
+        angles[qangle] += 1;
+    }
+    
+    int numberOfClusters = 3;
+    if(angles.size() < numberOfClusters)
+        return nil;
+    
+    std::vector<float> availableAngles;
+    for(auto angle: angles)
+        availableAngles.push_back(angle.first);
+    
+    cv::Mat clusteredAngles, bestLables;
+    cv::TermCriteria criteria;
+    criteria.type = cv::TermCriteria::Type::EPS + cv::TermCriteria::Type::COUNT;
+    criteria.maxCount = 10;
+    criteria.epsilon = 1.0;
+    cv::kmeans(cv::Mat(availableAngles, false), numberOfClusters, bestLables, criteria, 10, cv::KMEANS_PP_CENTERS, clusteredAngles);
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    float last = MAXFLOAT;
+    
+    for (int i = 0; i < lines.size(); i++) {
+        cv::Vec4i line = lines.at(i);
+        
+        HoughLine *e = new HoughLine;
+        e->p1 = CGPointMake(-0.5 + line[0] / src.size.width, -0.5 + line[1] / src.size.height);
+        e->p2 = CGPointMake(-0.5 + line[2] / src.size.width, -0.5 + line[3] / src.size.height);
+        
+        int dy = e->p2.y - e->p1.y;
+        int dx = e->p2.y - e->p1.x;
+        float rad = atan2(dy, dx);
+        float deg = rad * 180 / M_PI;
+        float bestAngle = 0;
+        
+        for(int j = 0; j < clusteredAngles.rows; j++)
+        {
+            float angle = clusteredAngles.at<float>(0, j);
+            float dist = (deg - angle) * (deg - angle);
+            if (dist < last)
+            {
+                bestAngle = angle;
+                last = dist;
+            }
+        }
+        
+        e->angle = bestAngle;
+        
+        NSValue *val = [NSValue value: e withObjCType:@encode(HoughLine)];
+        [arr addObject:val];
+    }
+    
+    return arr;
+}
+
 +(NSArray *) bundleDetectedData:(cv::Mat)dst
 {
     NSMutableArray* res = [[NSMutableArray alloc] init];

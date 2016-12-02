@@ -13,7 +13,7 @@ import AVFoundation
 
 protocol CVStateListener {
     func onFrameReady(image: UIImage)
-    func onFeaturesDetected(data: NSArray)
+    func onFeaturesDetected(edges: [HoughLine])
 }
 
 class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -73,7 +73,15 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         if(self.currentFrame % 50 == 0) {
             backgroundQueue!.async {
                 let start = DispatchTime.now()
-                let processed: NSArray = OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
+                let processed: NSArray = OpenCV.detectFeatures(image) as NSArray //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
+                
+                var edges = [HoughLine]()
+                
+                for item : Any in processed {
+                    let i = item as! NSValue
+                    edges.append(i.houghLinesValue)
+                }
+                
                 let end = DispatchTime.now()
                 
                 let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
@@ -84,7 +92,7 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
                 
                 if self.delegate != nil {
                     //self.delegate!.onFrameReady(image: test)
-                    self.delegate!.onFeaturesDetected(data: processed)
+                    self.delegate!.onFeaturesDetected(edges: edges)
                 }
             }
         }

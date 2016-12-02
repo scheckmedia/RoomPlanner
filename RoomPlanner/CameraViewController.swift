@@ -83,15 +83,14 @@ class CameraViewController: GLKViewController, CVStateListener {
     
     func onFrameReady(image: UIImage) {}
     
-    func onFeaturesDetected(data: NSArray) {
+    func onFeaturesDetected(edges: [HoughLine]) {
         DispatchQueue.main.async {
             var points = [GLPoint3]()
-            for point in data {
-                let p = point as! CGPoint
-                let pp = GLPoint3(x: GLfloat(p.x), y: GLfloat(p.y), z: 0)
-                points.append(pp)
+            for edge in edges {
+                points.append(GLPoint3(x: GLfloat(edge.p1.x), y: GLfloat(edge.p1.y), z: 0))
+                points.append(GLPoint3(x: GLfloat(edge.p2.x), y: GLfloat(edge.p2.y), z: 0))
             }
-            
+//
             let pos = Mat4(m: self.rv!.stage!.modelPosition.m)
             let f = Feature(points: points)
             f.aspectRatio = GLfloat(1280.0 / 720.0)
@@ -115,10 +114,9 @@ class CameraViewController: GLKViewController, CVStateListener {
         let translate = sender.translation(in: self.rv!)
         let x = translate.x
         let y = translate.y
-        let delta = CGFloat(1.0)
-        let dx = (delta * (x / delta) / self.view.frame.width)
-        let dy = (delta * (y / delta) / (self.view.frame.height / 2.0))
-        //print("t: \(translate) --> \(dx), \(dy)")
+        let delta = CGFloat(5)
+        let dx = (delta * floor((x / delta + 0.5))) / self.view.frame.width
+        let dy = (delta * floor((y / delta + 0.5))) / (self.view.frame.height / 2.0)
         
         if let model = self.rv?.furniture {
             if(mode == .TRANSLATION) {

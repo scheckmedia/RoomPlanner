@@ -65,7 +65,12 @@ class Feature: Renderable {
         glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
         
         glBindVertexArray(vao)
-        glDrawArrays(GLenum(GL_POINTS), 0, GLsizei(self.points!.count))
+        
+        for i in 0...GLsizei(self.points!.count) / 2 {
+            glDrawArrays(GLenum(GL_LINES), i * 2, 2)
+        }
+        
+        
         glBindVertexArray(0)
         glUseProgram(0)
     }
