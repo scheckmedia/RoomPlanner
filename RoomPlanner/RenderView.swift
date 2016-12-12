@@ -12,9 +12,9 @@ import GLMatrix
 import CoreMotion
 
 class RenderView : GLKView, GLKViewDelegate {
-    var stageScaleFactor:Float? = nil
     var furniture: Furniture?
     var stage : Plane?
+    var stageScaleFactor: Float = 0.0
     var perspective = Mat4.Identity()
     var cam = Mat4.Identity()
     var stageCam = Mat4.Identity()
@@ -62,7 +62,7 @@ class RenderView : GLKView, GLKViewDelegate {
         
         // 11.0 is the distance between the camera and the plane with the video texture
         let rmax = Float(2.0 * 11.0 * tan(56.3.degreesToRadians * 0.5))
-        let stageScaleFactor = Float(rmax * rvAspect)
+        stageScaleFactor = Float(rmax * rvAspect)
         let pos = Mat4.Identity()
         pos.scale(by: Vec4(v:(1, 1280 / 720, 1, 1)))
         pos.scale(by: stageScaleFactor)

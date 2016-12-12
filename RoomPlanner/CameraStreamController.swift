@@ -70,18 +70,10 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         let image: UIImage = OpenCV.image(from: sampleBuffer)
         
         self.currentFrame += 1
-        if(self.currentFrame % 50 == 0) {
+        if(self.currentFrame % 30 == 0) {
             backgroundQueue!.async {
                 let start = DispatchTime.now()
-                let processed: NSArray = OpenCV.detectFeatures(image) as NSArray //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
-                
-                var edges = [HoughLine]()
-                
-                for item : Any in processed {
-                    let i = item as! NSValue
-                    edges.append(i.houghLinesValue)
-                }
-                
+                let processed = OpenCV.detectFeatures(image) as? [HoughLine] //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
                 let end = DispatchTime.now()
                 
                 let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
@@ -90,9 +82,9 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
 
                 //print("exectime: \(end.time)")
                 
-                if self.delegate != nil {
+                if self.delegate != nil && processed != nil {
                     //self.delegate!.onFrameReady(image: test)
-                    self.delegate!.onFeaturesDetected(edges: edges)
+                    self.delegate!.onFeaturesDetected(edges: processed!)
                 }
             }
         }

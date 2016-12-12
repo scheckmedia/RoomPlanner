@@ -85,16 +85,12 @@ class CameraViewController: GLKViewController, CVStateListener {
     
     func onFeaturesDetected(edges: [HoughLine]) {
         DispatchQueue.main.async {
-            var points = [GLPoint3]()
-            for edge in edges {
-                points.append(GLPoint3(x: GLfloat(edge.p1.x), y: GLfloat(edge.p1.y), z: 0))
-                points.append(GLPoint3(x: GLfloat(edge.p2.x), y: GLfloat(edge.p2.y), z: 0))
-            }
-//
-            let pos = Mat4(m: self.rv!.stage!.modelPosition.m)
-            let f = Feature(points: points)
-            f.aspectRatio = GLfloat(1280.0 / 720.0)
-            pos.translate(by: Vec3(v: (0.0, 0.0, 0.1)))
+            let pos = Mat4.Identity()
+            let f = Feature(edges: edges)
+            pos.rotateAroundZ(byAngle: Float(90.0.degreesToRadians))
+            pos.scale(by: Vec4(v: (GLfloat(1280.0 / 720.0), 1.0, 1.0, 1.0)))
+            pos.scale(by: self.rv!.stageScaleFactor)
+            pos.translate(by: Vec3(v: (0.0, 0.0, -9.9)))
             f.modelPosition = pos
             self.rv!.debugFeature = f
         }

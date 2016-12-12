@@ -8,27 +8,37 @@
 
 import Foundation
 import GLMatrix
-
+import GLKit
 // simple class for feature visualization
 class Feature: Renderable {
     internal var texture: GLuint?
     internal var modelPosition: Mat4
-    private let points:[GLPoint3]?
+    private var points:[GLPoint3]
+    private var colors:[GLKVector4]
     var vao  = GLuint()
-    var vbo = GLuint()
+    var vbo = [GLuint(), GLuint()]
     var posid = GLuint()
+    var typeid = GLuint()
     var program : GLuint?
-    var aspectRatio:Float = 1.0 {
-        didSet {
-            self.modelPosition.scale(by: Vec4(v: (aspectRatio, 1, 1, 0)))
-        }
-    }
     
-    init (points: [GLPoint3]) {
-        self.points = points
+    init (edges: [HoughLine]) {
+        self.points = [GLPoint3]()
+        self.colors = [GLKVector4]()
+        let c = [
+            GLKVector4(v: (1, 0, 0, 1)),
+            GLKVector4(v: (0, 1, 0, 1)),
+            GLKVector4(v: (0, 0, 1, 1))
+        ];
+        for edge in edges {
+            points.append(GLPoint3(x: GLfloat(edge.p1.x), y: GLfloat(edge.p1.y), z: 0))
+            points.append(GLPoint3(x: GLfloat(edge.p2.x), y: GLfloat(edge.p2.y), z: 0))
+            colors.append(c[Int(edge.type)])
+            colors.append(c[Int(edge.type)])
+        }
         self.modelPosition = Mat4.Identity()
         self.program = GLHelper.linkProgram(vertexShader: "feature.vsh", fragmentShader: "feature.fsh")
         self.posid = GLuint(glGetAttribLocation(program!, "position"))
+        self.typeid = GLuint(glGetAttribLocation(program!, "colors"))
         
         createData()
     }
@@ -42,14 +52,22 @@ class Feature: Renderable {
         glGenVertexArrays(1, &vao)
         glBindVertexArray(vao)
         
-        glGenBuffers(1, &vbo)
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo)
-        glBufferData(GLenum(GL_ARRAY_BUFFER),  points!.size(), points!, GLenum(GL_STATIC_DRAW))
-        
+        glGenBuffers(2, &vbo)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[0])
+        glBufferData(GLenum(GL_ARRAY_BUFFER),  points.size(), points, GLenum(GL_STATIC_DRAW))
         glEnableVertexAttribArray(posid)
         
-        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[0])
         glVertexAttribPointer(posid, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLPoint3>.size), nil)
+        
+        
+        
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[1])
+        glBufferData(GLenum(GL_ARRAY_BUFFER),  colors.size(), colors, GLenum(GL_STATIC_DRAW))
+        glEnableVertexAttribArray(typeid)
+        
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[1])
+        glVertexAttribPointer(typeid, 4, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLKVector4>.size), nil)
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), 0)
         glBindVertexArray(0)
@@ -66,9 +84,10 @@ class Feature: Renderable {
         
         glBindVertexArray(vao)
         
-        for i in 0...GLsizei(self.points!.count) / 2 {
-            glDrawArrays(GLenum(GL_LINES), i * 2, 2)
-        }
+//        for i in 0...GLsizei(self.points.count) / 2 {
+//            glDrawArrays(GLenum(GL_LINES), i * 2, 2)
+//        }
+        glDrawArrays(GLenum(GL_LINES), 0, GLsizei(self.points.count) / 2)
         
         
         glBindVertexArray(0)

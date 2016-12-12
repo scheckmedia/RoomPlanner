@@ -10,13 +10,23 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface OpenCV : NSObject
+@interface HoughLine : NSObject
+@property float angle;
+@property float qAngle;
+@property int type;
+@property CGPoint p1;
+@property CGPoint p2;
+@end
 
-typedef struct HoughLine {
-    float angle;
-    CGPoint p1;
-    CGPoint p2;
-} HoughLine;
+@implementation HoughLine
+- (NSString*) description {
+    return [NSString stringWithFormat: @"HoughLine: x1: %.2f y1: %.2f x2: %.2f y2: %.2f angle: %.2f and type %d", self.p1.x, self.p1.y, self.p2.x, self.p2.y, self.angle, self.type];
+}
+@end
+
+
+
+@interface OpenCV : NSObject
 
 +(void) bindContext:(EAGLContext*) ctx withTextureID:(GLuint) tid;
 +(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
@@ -27,20 +37,3 @@ typedef struct HoughLine {
 
 @end
 
-@interface NSValue (HoughLine)
-+ (instancetype)valuewithHoughLines:(HoughLine)value;
-@property (readonly) HoughLine houghLinesValue;
-@end
-
-@implementation NSValue (HoughLine)
-+ (instancetype)valuewithHoughLines:(HoughLine)value
-{
-    return [self valueWithBytes:&value objCType:@encode(HoughLine *)];
-}
-- (HoughLine) houghLinesValue
-{
-    HoughLine value;
-    [self getValue:&value];
-    return value;
-}
-@end
