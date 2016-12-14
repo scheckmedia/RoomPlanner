@@ -14,6 +14,8 @@ import GLMatrix
 
 class CameraViewController: GLKViewController, CVStateListener {
     
+    @IBOutlet weak var state: UILabel!
+    
     enum EditorMode {
         case TRANSLATION, ROTATION
     }
@@ -130,8 +132,10 @@ class CameraViewController: GLKViewController, CVStateListener {
     @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {
         if mode == .TRANSLATION {
             mode = .ROTATION
+            state.text = "Rotate"
         } else {
             mode = .TRANSLATION
+            state.text = "Translate"
         }
     }
     

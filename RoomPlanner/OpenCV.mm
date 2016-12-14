@@ -159,7 +159,9 @@ static GLuint textureId;
         float dy = e.p2.y - e.p1.y;
         float dx = e.p2.x - e.p1.x;
         
-        float angle = abs(atan2(dy, dx)  * 180 / M_PI);
+        float angle = atan2(dy, dx)  * 180 / M_PI;
+        if(angle < 0) angle += 180.0;
+        
         float delta = 5.0;
         float qangle = delta * floor((angle / delta) * 0.5);
         

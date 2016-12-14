@@ -70,7 +70,7 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         let image: UIImage = OpenCV.image(from: sampleBuffer)
         
         self.currentFrame += 1
-        if(self.currentFrame % 30 == 0) {
+        if(self.currentFrame % 60 == 0) {
             backgroundQueue!.async {
                 let start = DispatchTime.now()
                 let processed = OpenCV.detectFeatures(image) as? [HoughLine] //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
