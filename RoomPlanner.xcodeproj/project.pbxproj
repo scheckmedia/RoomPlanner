@@ -32,6 +32,9 @@
 		D2ABD3991DE1EC4500E7B907 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD3981DE1EC4500E7B907 /* Plane.swift */; };
 		D2ABD39B1DE1ECA000E7B907 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD39A1DE1ECA000E7B907 /* Room.swift */; };
 		D2ABD39E1DE1F0D900E7B907 /* Furniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2ABD39D1DE1F0D900E7B907 /* Furniture.swift */; };
+		D2B2D7A11E473CD000E06D7B /* HoughClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B2D7A01E473CD000E06D7B /* HoughClassifier.m */; };
+		D2B2D7A51E47447A00E06D7B /* VanishingPointDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */; };
+		D2B2D7A71E47683600E06D7B /* ref.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2B2D7A61E47683600E06D7B /* ref.jpg */; };
 		D2CA30791DE85B20001B87F0 /* model.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30771DE85B20001B87F0 /* model.fsh */; };
 		D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30781DE85B20001B87F0 /* model.vsh */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -47,7 +50,7 @@
 
 /* Begin PBXFileReference section */
 		27016C3F1DD12420004D98C3 /* RoomPlanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RoomPlanner-Bridging-Header.h"; sourceTree = "<group>"; };
-		27016C401DD12420004D98C3 /* OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCV.h; sourceTree = "<group>"; };
+		27016C401DD12420004D98C3 /* OpenCV.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = OpenCV.h; sourceTree = "<group>"; };
 		27016C411DD12420004D98C3 /* OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCV.mm; sourceTree = "<group>"; };
 		276FBFB61DD78BC400E5A629 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = Pods/OpenCV/opencv2.framework; sourceTree = "<group>"; };
 		27AF3D201DCCD4B4005A727A /* RoomPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +82,11 @@
 		D2ABD3981DE1EC4500E7B907 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		D2ABD39A1DE1ECA000E7B907 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		D2ABD39D1DE1F0D900E7B907 /* Furniture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Furniture.swift; sourceTree = "<group>"; };
+		D2B2D7A01E473CD000E06D7B /* HoughClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HoughClassifier.m; sourceTree = "<group>"; };
+		D2B2D7A21E473DE500E06D7B /* HoughClassifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoughClassifier.h; sourceTree = "<group>"; };
+		D2B2D7A31E47446B00E06D7B /* VanishingPointDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VanishingPointDetector.h; sourceTree = "<group>"; };
+		D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VanishingPointDetector.m; sourceTree = "<group>"; };
+		D2B2D7A61E47683600E06D7B /* ref.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ref.jpg; sourceTree = "<group>"; };
 		D2CA30771DE85B20001B87F0 /* model.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.fsh; sourceTree = "<group>"; };
 		D2CA30781DE85B20001B87F0 /* model.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.vsh; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
@@ -170,6 +178,10 @@
 				27016C401DD12420004D98C3 /* OpenCV.h */,
 				27016C411DD12420004D98C3 /* OpenCV.mm */,
 				27016C3F1DD12420004D98C3 /* RoomPlanner-Bridging-Header.h */,
+				D2B2D7A01E473CD000E06D7B /* HoughClassifier.m */,
+				D2B2D7A21E473DE500E06D7B /* HoughClassifier.h */,
+				D2B2D7A31E47446B00E06D7B /* VanishingPointDetector.h */,
+				D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */,
 			);
 			name = OpenCV;
 			sourceTree = "<group>";
@@ -186,6 +198,7 @@
 		CD243B2E1DD9A81C0083FFC7 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				D2B2D7A61E47683600E06D7B /* ref.jpg */,
 				D2F8EBC21DEEB9D30079E23F /* CenterTable.mtl */,
 				D2FEA31D1DDEFFC800438A11 /* ROUNDSOFA.mtl */,
 				D2926BD31DDC8C12004BE72B /* room.jpg */,
@@ -315,6 +328,7 @@
 			files = (
 				D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */,
 				CD243B351DD9A9EF0083FFC7 /* RoundSofa.obj in Resources */,
+				D2B2D7A71E47683600E06D7B /* ref.jpg in Resources */,
 				D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */,
 				D2633E131DE18FEA0075F9E1 /* feature.vsh in Resources */,
 				CD243B331DD9A9E20083FFC7 /* RoundSofa_02.jpg in Resources */,
@@ -391,6 +405,7 @@
 			files = (
 				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
 				CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */,
+				D2B2D7A51E47447A00E06D7B /* VanishingPointDetector.m in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,
 				27AF3D241DCCD4B4005A727A /* AppDelegate.swift in Sources */,
 				27FD093F1DD38CEB000ACF10 /* CameraStreamController.swift in Sources */,
@@ -401,6 +416,7 @@
 				27016C421DD12420004D98C3 /* OpenCV.mm in Sources */,
 				CD243B3B1DD9AE0E0083FFC7 /* RoomPlanner.xcdatamodeld in Sources */,
 				27AF3D261DCCD4B4005A727A /* CameraViewController.swift in Sources */,
+				D2B2D7A11E473CD000E06D7B /* HoughClassifier.m in Sources */,
 				D2ABD3991DE1EC4500E7B907 /* Plane.swift in Sources */,
 				D2FEA31F1DDF059600438A11 /* RenderView.swift in Sources */,
 				CD56AA711DE2E38800CFAF30 /* ModelMenuController.swift in Sources */,

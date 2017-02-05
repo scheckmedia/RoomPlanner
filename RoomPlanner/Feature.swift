@@ -32,8 +32,8 @@ class Feature: Renderable {
         for edge in edges {
             points.append(GLPoint3(x: GLfloat(edge.p1.x), y: GLfloat(edge.p1.y), z: 0))
             points.append(GLPoint3(x: GLfloat(edge.p2.x), y: GLfloat(edge.p2.y), z: 0))
-            colors.append(c[Int(edge.type)])
-            colors.append(c[Int(edge.type)])
+            colors.append(c[Int(edge.type.rawValue)])
+            colors.append(c[Int(edge.type.rawValue)])
         }
         self.modelPosition = Mat4.Identity()
         self.program = GLHelper.linkProgram(vertexShader: "feature.vsh", fragmentShader: "feature.fsh")

@@ -29,7 +29,7 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         super.init()
         
         self.session = AVCaptureSession()
-        self.session!.sessionPreset = AVCaptureSessionPreset1280x720
+        self.session!.sessionPreset = AVCaptureSessionPresetiFrame1280x720
         self.device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) as AVCaptureDevice
      
         self.createVideoInput()

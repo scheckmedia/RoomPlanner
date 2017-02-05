@@ -6,23 +6,11 @@
 //  Copyright © 2016 AR. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-
-@interface HoughLine : NSObject
-@property float angle;
-@property float qAngle;
-@property int type;
-@property CGPoint p1;
-@property CGPoint p2;
-@end
-
-@implementation HoughLine
-- (NSString*) description {
-    return [NSString stringWithFormat: @"HoughLine: x1: %.2f y1: %.2f x2: %.2f y2: %.2f angle: %.2f and type %d", self.p1.x, self.p1.y, self.p2.x, self.p2.y, self.angle, self.type];
-}
-@end
+#import "HoughClassifier.h"
 
 
 

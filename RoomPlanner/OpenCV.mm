@@ -10,6 +10,7 @@
 #import <opencv2/opencv.hpp>
 #import <opencv2/imgcodecs/ios.h>
 #import <GLKit/GLKit.h>
+#import "VanishingPointDetector.h"
 
 @implementation OpenCV
 
@@ -71,6 +72,9 @@ static GLuint textureId;
     
     // Create an image object from the Quartz image
     UIImage *image = [UIImage imageWithCGImage:quartzImage];
+    
+//    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ref" ofType:@"jpg"];
+//    image = [UIImage imageWithContentsOfFile:filePath];
     
     if(glContext != nil)
     {
@@ -136,104 +140,34 @@ static GLuint textureId;
     
     if(!src)
         return arr;
-    
+
     cv::Mat cvt = [self toGreyScale:src];
     std::vector<cv::Vec4i> lines;
     
     cv::flip(cvt, cvt, 1);
     //cv::flip(cvt, cvt, 0);
- 
-    cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
-    cv::Canny(cvt, dst, 30, 100);
-    cv::HoughLinesP(dst, lines, 1, M_PI / 180, 80, 100, 10);
     
-    std::map<float, int> angles;
+    
+    cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
+    cv::equalizeHist(cvt, dst);
+    cv::Canny(dst, dst, 30, 180);
+    cv::HoughLinesP(dst, lines, 1, M_PI / 180, 30, 200, 10);
+    NSMutableArray *houghLines = [NSMutableArray new];
     for (int i = 0; i < lines.size(); i++) {
         cv::Vec4i line = lines.at(i);
+        CGPoint p1 = CGPointMake(-0.5 + line[0] / src.size.width, -0.5 + line[1] / src.size.height);
+        CGPoint p2 = CGPointMake(-0.5 + line[2] / src.size.width, -0.5 + line[3] / src.size.height);
         
-        HoughLine *e = [[HoughLine alloc] init];
-        
-        e.p1 = CGPointMake(-0.5 + line[0] / src.size.width, -0.5 + line[1] / src.size.height);
-        e.p2 = CGPointMake(-0.5 + line[2] / src.size.width, -0.5 + line[3] / src.size.height);
-        
-        float dy = e.p2.y - e.p1.y;
-        float dx = e.p2.x - e.p1.x;
-        
-        float angle = atan2(dy, dx)  * 180 / M_PI;
-        if(angle < 0) angle += 180.0;
-        
-        float delta = 5.0;
-        float qangle = delta * floor((angle / delta) * 0.5);
-        
-        e.angle = angle;
-        e.qAngle = qangle;
-        
-        if(angles.count(qangle) == false)
-        {
-            angles.insert(std::pair<float, int>(qangle, 0));
-        }
-        
-        angles[qangle] += 1;
-        
-        [arr addObject:e];
+        HoughLine *e = [[HoughLine alloc] initWithPoint1:p1 andPoint2:p2];
+        [houghLines addObject:e];
     }
     
-    int numberOfClusters = 3;
-    if(angles.size() < numberOfClusters)
-        return nil;
-    
-    std::vector<float> availableAngles;
-    for(auto angle: angles)
-        availableAngles.push_back(angle.first);
-    
-    cv::Mat clusteredAngles, bestLables;
-    cv::TermCriteria criteria;
-    criteria.type = cv::TermCriteria::Type::EPS + cv::TermCriteria::Type::MAX_ITER;
-    criteria.maxCount = 30;
-    criteria.epsilon = 1.0;
-    cv::kmeans(cv::Mat(availableAngles, false), numberOfClusters, bestLables, criteria, 50, cv::KMEANS_PP_CENTERS, clusteredAngles);
+    VanishingPointDetector *p = [[VanishingPointDetector alloc] initWithHoughLines:houghLines];
+    p.vanishingPoints;
     
     
-    for(HoughLine *line in arr)
-    {
-        std::vector<float>::const_iterator it = std::find(availableAngles.begin(), availableAngles.end(), line.qAngle);
-        if(it != availableAngles.end())
-        {
-            int idx = (int)(it - availableAngles.begin());
-            line.type = bestLables.at<int>(0, idx);
-            
-            //NSLog(@"%@", line);
-        }
-    }
     
-//    for (int i = 0; i < lines.size(); i++) {
-//        cv::Vec4i line = lines.at(i);
-//        
-//        
-//        
-//        int dy = e.p2.y - e.p1.y;
-//        int dx = e.p2.x - e.p1.x;
-//        float rad = atan2(dy, dx);
-//        float deg = rad * 180 / M_PI;
-//        float bestAngle = 0;
-//        
-//        for(int j = 0; j < clusteredAngles.rows; j++)
-//        {
-//            float angle = clusteredAngles.at<float>(0, j);
-//            float dist = (deg - angle) * (deg - angle);
-//            if (dist < last)
-//            {
-//                bestAngle = angle;
-//                last = dist;
-//            }
-//        }
-//        
-//        
-//        // NSLog(@"HoughLine: %@", e);
-//        
-//    }
-    
-    return arr;
+    return houghLines;
 }
 
 +(NSArray *) bundleDetectedData:(cv::Mat)dst
@@ -262,5 +196,6 @@ static GLuint textureId;
     
     return res;
 }
+
 
 @end
