@@ -15,17 +15,18 @@
     if (self != nil) {
         self.p1 = p1;
         self.p2 = p2;
-        float dy = self.p2.y - self.p1.y;
         float dx = self.p2.x - self.p1.x;
+        float dy = self.p2.y - self.p1.y;
         
         self.weight = sqrt(pow(dx, 2) + pow(dy, 2));
     
-        self.line = CGVectorMake(dx, dy);
+        self.line = CGPointMake(dx, dy);
     
-        double delta = 5.0;
-        self.angle = atan2(dy, dx)  * 180 / M_PI;
-        self.angle = delta * floor((self.angle / delta) * 0.5);
-        if(self.angle < 0) self.angle += 180.0;
+        double delta = 10.0;
+        self.angle = atan2(dy / self.weight, dx / self.weight) * 180 / M_PI;
+        self.angle = delta * floor((self.angle / delta) + 0.5);
+        while(self.angle < 0)
+            self.angle += 180.0;
     
         [self classify];
     }
@@ -39,17 +40,18 @@
 }
 
 -(void) classify {
-    if (self.angle == 0 || self.angle == 180)
+    if (self.angle == 0 || self.angle == 180) {
         self.type = kVertical;
-    else if(self.angle == 90 || self.angle == 270)
+    } else if(self.angle == 90 || self.angle == 270) {
         self.type = kHorizontal;
-    else
+    } else {
         self.type = kDiagonal;
+    }
 }
 
 -(CGPoint) mid {
     
-    return CGPointMake(self.p1.x + (self.line.dx / 2.0), self.p2.y / (self.line.dy / 2.0) );
+    return CGPointMake(self.p1.x + (self.line.x / 2.0), self.p1.y / (self.line.y / 2.0) );
 }
 
 @end

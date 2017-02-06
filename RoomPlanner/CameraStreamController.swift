@@ -13,7 +13,7 @@ import AVFoundation
 
 protocol CVStateListener {
     func onFrameReady(image: UIImage)
-    func onFeaturesDetected(edges: [HoughLine])
+    func onFeaturesDetected(edges: [HoughLine], andVanishPoint vp: [CGPoint])
 }
 
 class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -24,12 +24,14 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     internal var session: AVCaptureSession?
     public var ctx: EAGLContext?
     var backgroundQueue: DispatchQueue?
+    public var place = false
     
     override init() {
         super.init()
         
         self.session = AVCaptureSession()
-        self.session!.sessionPreset = AVCaptureSessionPresetiFrame1280x720
+    
+        self.session!.sessionPreset = AVCaptureSessionPreset1280x720
         self.device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo) as AVCaptureDevice
      
         self.createVideoInput()
@@ -59,6 +61,7 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     internal func startCaptureSession() {
+        place = false
         self.session?.startRunning()
     }
     
@@ -67,27 +70,44 @@ class CameraStreamController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-        let image: UIImage = OpenCV.image(from: sampleBuffer)
         
-        self.currentFrame += 1
-        if(self.currentFrame % 60 == 0) {
-            backgroundQueue!.async {
-                let start = DispatchTime.now()
-                let processed = OpenCV.detectFeatures(image) as? [HoughLine] //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
-                let end = DispatchTime.now()
-                
-                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-                let timeInterval = Double(nanoTime) / 1_000_000
-                print("execution time of canny: \(timeInterval) ms")
-
-                //print("exectime: \(end.time)")
-                
-                if self.delegate != nil && processed != nil {
-                    //self.delegate!.onFrameReady(image: test)
-                    self.delegate!.onFeaturesDetected(edges: processed!)
-                }
+        if self.session?.isRunning == false {
+            return
+        }
+        
+        let image: UIImage = OpenCV.image(from: sampleBuffer)
+        if place == false {
+            return
+        }
+        
+        
+        stopCaptureSession()
+        
+        let start = DispatchTime.now()
+        let processed = OpenCV.detectFeatures(image, andDraw: true) as! NSMutableDictionary //OpenCV.cannyCornerDetection(image, thres_1: 50, thres_2: 150) as NSArray
+        let end = DispatchTime.now()
+        
+        let hl = processed.object(forKey: "HoughLines") as! [HoughLine];
+        let vp = processed.object(forKey: "VanishingPoints") as! [Any];
+        
+        var vps: [CGPoint] = []
+        for val in vp {
+            if let v = val as? NSValue {
+                vps.append(v.cgPointValue)
             }
         }
+        
+        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+        let timeInterval = Double(nanoTime) / 1_000_000
+        print("execution time of canny: \(timeInterval) ms")
+        
+        //print("exectime: \(end.time)")
+        
+        if self.delegate != nil {
+            //self.delegate!.onFrameReady(image: test)
+            // self.delegate!.onFeaturesDetected(edges: hl, andVanishPoint: vps)
+        }
+        //self.place = false
     }
     
     internal func captureOutput(_ captureOutput: AVCaptureOutput!, didDrop sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {}

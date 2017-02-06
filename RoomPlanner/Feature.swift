@@ -15,15 +15,27 @@ class Feature: Renderable {
     internal var modelPosition: Mat4
     private var points:[GLPoint3]
     private var colors:[GLKVector4]
-    var vao  = GLuint()
+    private var vanishingPoints: [GLPoint3]
+    var vao  = [GLuint(), GLuint()]
     var vbo = [GLuint(), GLuint()]
+    var vboPoint = GLuint()
     var posid = GLuint()
     var typeid = GLuint()
     var program : GLuint?
+    var pointProgram: GLuint?
     
-    init (edges: [HoughLine]) {
+    init (edges: [HoughLine], andVanishingPoint p: [CGPoint]) {
         self.points = [GLPoint3]()
         self.colors = [GLKVector4]()
+        
+        self.vanishingPoints = []
+        
+        for point in p {
+            self.vanishingPoints.append(GLPoint3(x: GLfloat(point.x), y: GLfloat(point.y), z: 0))
+        }
+        
+        
+        
         let c = [
             GLKVector4(v: (1, 0, 0, 1)),
             GLKVector4(v: (0, 1, 0, 1)),
@@ -37,6 +49,7 @@ class Feature: Renderable {
         }
         self.modelPosition = Mat4.Identity()
         self.program = GLHelper.linkProgram(vertexShader: "feature.vsh", fragmentShader: "feature.fsh")
+        self.pointProgram = GLHelper.linkProgram(vertexShader: "vanshing.vsh", fragmentShader: "feature.fsh")
         self.posid = GLuint(glGetAttribLocation(program!, "position"))
         self.typeid = GLuint(glGetAttribLocation(program!, "colors"))
         
@@ -45,12 +58,12 @@ class Feature: Renderable {
     
     deinit {
         glDeleteBuffers(1, &vbo)
-        glDeleteVertexArrays(1, &vao)
+        glDeleteVertexArrays(3, &vao)
     }
     
     func createData() {
-        glGenVertexArrays(1, &vao)
-        glBindVertexArray(vao)
+        glGenVertexArrays(2, &vao)
+        glBindVertexArray(vao[0])
         
         glGenBuffers(2, &vbo)
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[0])
@@ -59,7 +72,6 @@ class Feature: Renderable {
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[0])
         glVertexAttribPointer(posid, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLPoint3>.size), nil)
-        
         
         
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vbo[1])
@@ -72,6 +84,16 @@ class Feature: Renderable {
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), 0)
         glBindVertexArray(0)
         
+        glBindVertexArray(vao[1])
+        
+        let pos = GLuint(glGetAttribLocation(self.pointProgram!, "position"))
+        glGenBuffers(2, &self.vboPoint)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), self.vboPoint)
+        glBufferData(GLenum(GL_ARRAY_BUFFER),  vanishingPoints.size(), vanishingPoints, GLenum(GL_STATIC_DRAW))
+        glEnableVertexAttribArray(pos)
+        glVertexAttribPointer(pos, 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE), GLsizei(MemoryLayout<GLPoint3>.size), nil)
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), 0)
+        glBindVertexArray(0)
     }
     
     internal func render(projection: Mat4, view: Mat4) {
@@ -82,14 +104,14 @@ class Feature: Renderable {
         
         glUniformMatrix4fv(GLint(glGetUniformLocation(program!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
         
-        glBindVertexArray(vao)
-        
-//        for i in 0...GLsizei(self.points.count) / 2 {
-//            glDrawArrays(GLenum(GL_LINES), i * 2, 2)
-//        }
+        glBindVertexArray(vao[0])
         glDrawArrays(GLenum(GL_LINES), 0, GLsizei(self.points.count) / 2)
+        glBindVertexArray(0)
         
-        
+        glUseProgram(self.pointProgram!)
+        glUniformMatrix4fv(GLint(glGetUniformLocation(pointProgram!, "mvp")), 1, GLboolean(GL_FALSE), mvp)
+        glBindVertexArray(vao[1])
+        glDrawArrays(GLenum(GL_POINTS), 0, GLsizei(self.vanishingPoints.count))
         glBindVertexArray(0)
         glUseProgram(0)
     }

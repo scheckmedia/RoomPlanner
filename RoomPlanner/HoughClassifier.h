@@ -22,7 +22,7 @@ typedef enum {
 @property float angle;
 @property CGPoint p1;
 @property CGPoint p2;
-@property CGVector line;
+@property CGPoint line;
 @property CGFloat weight;
 @property HoughLineType type;
 

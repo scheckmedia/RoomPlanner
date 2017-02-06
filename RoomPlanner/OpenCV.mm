@@ -31,7 +31,7 @@ static GLuint textureId;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 720, 1280, 0, GL_RGBA, GL_UNSIGNED_BYTE, nil);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1280, 720, 0, GL_RGBA, GL_UNSIGNED_BYTE, nil);
     
     glFlush();
 }
@@ -81,11 +81,11 @@ static GLuint textureId;
         cv::Mat imageMat, outMat;
         
         UIImageToMat(image, imageMat);
-        cv::transpose(imageMat, outMat);
-        cv::flip(outMat, outMat, 1);
+        //cv::transpose(imageMat, outMat);
+        //cv::flip(imageMat, outMat, 1);
         [EAGLContext setCurrentContext: glContext];
         glBindTexture(GL_TEXTURE_2D, textureId);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, outMat.cols, outMat.rows, GL_RGBA, GL_UNSIGNED_BYTE, outMat.ptr());
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, imageMat.cols, imageMat.rows, GL_RGBA, GL_UNSIGNED_BYTE, imageMat.ptr());
         glFlush();
     }
     
@@ -135,39 +135,78 @@ static GLuint textureId;
     return [self bundleDetectedData:dst];
 }
 
-+(NSArray *)detectFeatures:(UIImage *)src {
-    NSMutableArray *arr = [NSMutableArray array];
-    
++(NSMutableDictionary *)detectFeatures:(UIImage *)src andDraw:(bool)draw {
     if(!src)
-        return arr;
-
+        return [NSMutableDictionary new];
+    
+    cv::Mat org, source;
+    UIImageToMat(src, org);
+    
     cv::Mat cvt = [self toGreyScale:src];
     std::vector<cv::Vec4i> lines;
     
-    cv::flip(cvt, cvt, 1);
+    //cv::flip(cvt, cvt, 1);
     //cv::flip(cvt, cvt, 0);
     
     
     cv::Mat dst = cv::Mat::zeros(cvt.size(), CV_32FC1);
-    cv::equalizeHist(cvt, dst);
-    cv::Canny(dst, dst, 30, 180);
-    cv::HoughLinesP(dst, lines, 1, M_PI / 180, 30, 200, 10);
+    cv::Mat canny = cv::Mat::zeros(cvt.size(), CV_32FC1);
+    // cv::equalizeHist(cvt, dst);
+    cv::Canny(cvt, canny, 50, 200);
+    cv::HoughLinesP(canny, lines, 1, M_PI / 180, 80, 30 , 10);
     NSMutableArray *houghLines = [NSMutableArray new];
+    std::vector<cv::Scalar> colors = {
+        cv::Scalar(255,0,0),
+        cv::Scalar(0,255,0),
+        cv::Scalar(0,0,255)
+    };
+    
     for (int i = 0; i < lines.size(); i++) {
         cv::Vec4i line = lines.at(i);
-        CGPoint p1 = CGPointMake(-0.5 + line[0] / src.size.width, -0.5 + line[1] / src.size.height);
-        CGPoint p2 = CGPointMake(-0.5 + line[2] / src.size.width, -0.5 + line[3] / src.size.height);
+        
+        
+//        CGPoint p1 = CGPointMake(-0.5 + line[0] / src.size.width, -0.5 + line[1] / src.size.height);
+//        CGPoint p2 = CGPointMake(-0.5 + line[2] / src.size.width, -0.5 + line[3] / src.size.height);
+        CGPoint p1 = CGPointMake(line[0], line[1]);
+        CGPoint p2 = CGPointMake(line[2], line[3]);
         
         HoughLine *e = [[HoughLine alloc] initWithPoint1:p1 andPoint2:p2];
         [houghLines addObject:e];
+        
+        cv::line( org, cv::Point(lines[i][0], lines[i][1]),
+                 cv::Point(lines[i][2], lines[i][3]), colors[e.type], 4, CV_FILLED );
+        
     }
     
+    
+    
     VanishingPointDetector *p = [[VanishingPointDetector alloc] initWithHoughLines:houghLines];
-    p.vanishingPoints;
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    [dict setValue:houghLines forKey:@"HoughLines"];
+    [dict setValue:p.vanishingPoints forKey:@"VanishingPoints"];
+    
+    for(int i = 0; i < p.vanishingPoints.count; i++) {
+        
+        if(p.vanishingPoints[i] != [NSNull null]) {
+            CGPoint point = ((NSValue *)p.vanishingPoints[i]).CGPointValue;
+            cv::circle(org, cv::Point(point.x, point.y), 2, colors[i], 15, CV_FILLED);
+        }
+    }
+    
+    if(glContext != nil && draw)
+    {
+        cv::Mat outMat;
+        //cv::transpose(org, outMat);
+        //cv::flip(outMat, outMat, 1);
+        [EAGLContext setCurrentContext: glContext];
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, org.cols, org.rows, GL_RGBA, GL_UNSIGNED_BYTE, org.ptr());
+        glFlush();
+        
+    }
     
     
-    
-    return houghLines;
+    return dict;
 }
 
 +(NSArray *) bundleDetectedData:(cv::Mat)dst

@@ -56,15 +56,15 @@ class RenderView : GLKView, GLKViewDelegate {
         
         
         let furniturePos = Mat4.Identity()
-        furniturePos.translate(by: Vec3(v: (0.0, -0.75, -2.0)))
+        furniturePos.translate(by: Vec3(v: (0.0, 0.0, -2.0)))
         furniture = Furniture(pos: furniturePos, path: ModelObject.all()!.first?.value(forKey: "path") as! String)
         
         
         // 11.0 is the distance between the camera and the plane with the video texture
-        let rmax = Float(2.0 * 11.0 * tan(56.3.degreesToRadians * 0.5))
+        let rmax = Float(2.0 * 7.0 * tan(56.3.degreesToRadians * 0.5))
         stageScaleFactor = Float(rmax * rvAspect)
         let pos = Mat4.Identity()
-        pos.scale(by: Vec4(v:(1, 1280 / 720, 1, 1)))
+        pos.scale(by: Vec4(v:(1280 / 720, 1, 1, 1)))
         pos.scale(by: stageScaleFactor)
         pos.translate(by: Vec3(v:(0, 0, -10)))
         stage = Plane(pos: pos)
@@ -77,22 +77,21 @@ class RenderView : GLKView, GLKViewDelegate {
         EAGLContext.setCurrent(self.context)
         glClearColor(0.3, 0.3, 0.3, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT) | GLbitfield(GL_DEPTH_BUFFER_BIT))
-        let camera = self.cam
+        self.cam = Mat4.Identity()
         
         if let d = manager?.deviceMotion?.attitude {
-            let q = Quat(x: Float(d.quaternion.x - 0.78539816339),
-                         y: Float(d.quaternion.y),
-                         z: Float(d.quaternion.z),
-                         w: Float(d.quaternion.w))
+            // yaw and pitch are inverted cause landscape mode
+            let q = Quat(roll: Float(d.roll + .pi / 2.0), pitch: Float(-d.yaw), yaw: Float(d.pitch))
             
             let eye = Vec3(v:(0,0, 1))
-            eye.transform(with: q)
+            let up = Vec3(v: (0, 1, 0))
             GLHelper.lookAt(eye: eye,
                             center: Vec3(v: (0, 0, 0)),
-                            up: Vec3(v: (0, 1, 0)),
-                            destMatrix: camera)
+                            up: up,
+                            destMatrix: self.cam)
             
-            //stage?.modelPosition.rotate(with: q)
+            self.cam.rotate(with: q)
+    
         }
         
         furniture?.render(projection: self.perspective, view: self.cam)

@@ -15,6 +15,56 @@ extension Array {
     }
 }
 
+extension Quat {
+    convenience init(roll: Float, pitch: Float, yaw: Float) {
+        let t0 = cos(yaw * 0.5);
+        let t1 = sin(yaw * 0.5);
+        let t2 = cos(roll * 0.5);
+        let t3 = sin(roll * 0.5);
+        let t4 = cos(pitch * 0.5);
+        let t5 = sin(pitch * 0.5);
+        
+        let w = t0 * t2 * t4 + t1 * t3 * t5;
+        let x = t0 * t3 * t4 - t1 * t2 * t5;
+        let y = t0 * t2 * t5 + t1 * t3 * t4;
+        let z = t1 * t2 * t4 - t0 * t3 * t5;
+        
+        self.init(x: x, y: y, z: z, w: w)
+    }
+    
+    func appendAngle(roll: Float, pitch: Float, yaw: Float) {
+        let ysqr = self.y * self.y
+        
+        // roll (x-axis rotation)
+        var t0 = +2.0 * (self.w * self.x + self.y * self.z);
+        var t1 = +1.0 - 2.0 * (self.x * self.x + ysqr)
+        let r = atan2(t0, t1) + roll
+        
+        // pitch (y-axis rotation)
+        var t2 = +2.0 * (self.w * self.y - self.z * self.x)
+        t2 = t2 > 1.0 ? 1.0 : t2
+        t2 = t2 < -1.0 ? -1.0 : t2
+        let p = asin(t2) + pitch
+        
+        // yaw (z-axis rotation)
+        var t3 = +2.0 * (self.w * self.z + self.x * self.y)
+        var t4 = +1.0 - 2.0 * (ysqr + self.z * self.z)
+        let y = atan2(t3, t4) + yaw
+        
+        t0 = cos(y * 0.5);
+        t1 = sin(y * 0.5);
+        t2 = cos(r * 0.5);
+        t3 = sin(r * 0.5);
+        t4 = cos(p * 0.5);
+        let t5 = sin(p * 0.5);
+        
+        self.w = t0 * t2 * t4 + t1 * t3 * t5;
+        self.x = t0 * t3 * t4 - t1 * t2 * t5;
+        self.y = t0 * t2 * t5 + t1 * t3 * t4;
+        self.z = t1 * t2 * t4 - t0 * t3 * t5;
+    }
+}
+
 
 extension Vec3 {
     static func cross(left:Vec3, right:Vec3) -> Vec3 {
@@ -25,6 +75,31 @@ extension Vec3 {
         ))
         
         return res
+    }
+    
+    func rotateAroundX(byAngle angle: Float) {
+        let s = GLfloat(sin(angle / 2.0))
+        let rot = Quat(x: s, y: 0.0, z: 0.0, w: GLfloat(cos(angle / 2.0)))
+        
+        self.transform(with: rot)
+    }
+    
+    public func transformMirroredY(with quat: Quat, andOutputTo out: Vec3? = nil) {
+        guard let out = out else { return transform(with: quat, andOutputTo: self) }
+        
+        let x = self[0], y = self[1], z = self[2],
+        qx = quat[0], qy = quat[1], qz = quat[2], qw = quat[3],
+        
+        // calculate quat vec
+        ix = qw * x + qy * z - qz * y,
+        iy = qw * y + qz * x - qx * z,
+        iz = qw * z + qx * y - qy * x,
+        iw = -qx * x - qy * y - qz * z
+        
+        // calculate result inverse quat
+        out[0] = -(ix * qw + iw * -qx + iy * -qz - iz * -qy)
+        out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz
+        out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx
     }
 }
 

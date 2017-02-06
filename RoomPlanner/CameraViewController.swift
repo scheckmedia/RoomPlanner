@@ -14,6 +14,7 @@ import GLMatrix
 
 class CameraViewController: GLKViewController, CVStateListener {
     
+    @IBOutlet weak var btnPlace: UIButton!
     @IBOutlet weak var state: UILabel!
     
     enum EditorMode {
@@ -85,10 +86,11 @@ class CameraViewController: GLKViewController, CVStateListener {
     
     func onFrameReady(image: UIImage) {}
     
-    func onFeaturesDetected(edges: [HoughLine]) {
+    
+    func onFeaturesDetected(edges: [HoughLine], andVanishPoint vp: [CGPoint]) {
         DispatchQueue.main.async {
             let pos = Mat4.Identity()
-            let f = Feature(edges: edges)
+            let f = Feature(edges: edges, andVanishingPoint: vp)
             pos.rotateAroundZ(byAngle: Float(90.0.degreesToRadians))
             pos.scale(by: Vec4(v: (GLfloat(1280.0 / 720.0), 1.0, 1.0, 1.0)))
             pos.scale(by: self.rv!.stageScaleFactor)
@@ -129,7 +131,20 @@ class CameraViewController: GLKViewController, CVStateListener {
         sender.setTranslation(CGPoint.zero, in: self.rv!)
     }
     
-    @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+    @IBAction func placeInRoom() {
+        if cameraStream != nil {
+            if cameraStream?.place == false {
+                cameraStream?.place = true
+                btnPlace.titleLabel?.text = "Place"
+            } else {
+                cameraStream?.place = false
+                cameraStream?.startCaptureSession()
+                btnPlace.titleLabel?.text = "Repeat"
+            }
+        }
+    }
+    
+    @IBAction func handleDoubleTap(_ sender: UITapGestureRecognizer) {        
         if mode == .TRANSLATION {
             mode = .ROTATION
             state.text = "Rotate"

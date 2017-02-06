@@ -13,14 +13,13 @@
 #import "HoughClassifier.h"
 
 
-
 @interface OpenCV : NSObject
 
 +(void) bindContext:(EAGLContext*) ctx withTextureID:(GLuint) tid;
 +(UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
 +(NSArray *) cornerHarrisDetection:(UIImage *)src blocksize:(int)bs ksize:(int)ksize k:(float)k;
 +(NSArray *) cannyCornerDetection:(UIImage *)src thres_1:(int)t1 thres_2:(int)t2;
-+(NSArray *) detectFeatures:(UIImage *) src;
++(NSMutableDictionary *) detectFeatures:(UIImage *) src andDraw: (bool) draw;
 //+(UIImage *) greyScaleFromImage: (UIImage *) image;
 
 @end

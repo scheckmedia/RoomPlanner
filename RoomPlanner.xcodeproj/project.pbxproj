@@ -35,6 +35,7 @@
 		D2B2D7A11E473CD000E06D7B /* HoughClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B2D7A01E473CD000E06D7B /* HoughClassifier.m */; };
 		D2B2D7A51E47447A00E06D7B /* VanishingPointDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */; };
 		D2B2D7A71E47683600E06D7B /* ref.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2B2D7A61E47683600E06D7B /* ref.jpg */; };
+		D2C9D8B71E47952300821787 /* vanshing.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2C9D8B61E47952300821787 /* vanshing.vsh */; };
 		D2CA30791DE85B20001B87F0 /* model.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30771DE85B20001B87F0 /* model.fsh */; };
 		D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30781DE85B20001B87F0 /* model.vsh */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
@@ -87,6 +88,7 @@
 		D2B2D7A31E47446B00E06D7B /* VanishingPointDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VanishingPointDetector.h; sourceTree = "<group>"; };
 		D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VanishingPointDetector.m; sourceTree = "<group>"; };
 		D2B2D7A61E47683600E06D7B /* ref.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ref.jpg; sourceTree = "<group>"; };
+		D2C9D8B61E47952300821787 /* vanshing.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vanshing.vsh; sourceTree = "<group>"; };
 		D2CA30771DE85B20001B87F0 /* model.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.fsh; sourceTree = "<group>"; };
 		D2CA30781DE85B20001B87F0 /* model.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.vsh; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		D2D615241DCF742D00E9C726 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				D2C9D8B61E47952300821787 /* vanshing.vsh */,
 				D2CA30771DE85B20001B87F0 /* model.fsh */,
 				D2CA30781DE85B20001B87F0 /* model.vsh */,
 				D2633E101DE18FEA0075F9E1 /* feature.fsh */,
@@ -339,6 +342,7 @@
 				D2F8EBC41DEEB9D30079E23F /* CenterTable.jpg in Resources */,
 				D2633E121DE18FEA0075F9E1 /* feature.fsh in Resources */,
 				D2926BD41DDC8C12004BE72B /* room.jpg in Resources */,
+				D2C9D8B71E47952300821787 /* vanshing.vsh in Resources */,
 				27AF3D2D1DCCD4B4005A727A /* Assets.xcassets in Resources */,
 				D2D615261DCF74B100E9C726 /* plane.vsh in Resources */,
 				D2CA30791DE85B20001B87F0 /* model.fsh in Resources */,
