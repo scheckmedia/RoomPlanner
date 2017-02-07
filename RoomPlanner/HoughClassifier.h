@@ -13,8 +13,8 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    kVertical,
     kHorizontal,
+    kVertical,
     kDiagonal
 } HoughLineType;
 
@@ -29,6 +29,7 @@ typedef enum {
 -(id) initWithPoint1: (CGPoint) p1 andPoint2: (CGPoint) p2;
 -(void) classify;
 -(CGPoint) mid;
+-(void)extendByLength:(float)length withPoint1:(bool) p1;
 @end
 
 

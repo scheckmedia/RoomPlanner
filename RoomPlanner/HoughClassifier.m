@@ -41,9 +41,9 @@
 
 -(void) classify {
     if (self.angle == 0 || self.angle == 180) {
-        self.type = kVertical;
-    } else if(self.angle == 90 || self.angle == 270) {
         self.type = kHorizontal;
+    } else if(self.angle == 90 || self.angle == 270) {
+        self.type = kVertical;
     } else {
         self.type = kDiagonal;
     }
@@ -51,7 +51,23 @@
 
 -(CGPoint) mid {
     
-    return CGPointMake(self.p1.x + (self.line.x / 2.0), self.p1.y / (self.line.y / 2.0) );
+        return CGPointMake((self.p1.x + self.p2.x) / 2.0, (self.p1.y + self.p2.y) / 2.0 );
+}
+
+-(void)extendByLength:(float)length withPoint1:(bool) p1{
+    
+    
+    if(p1) {
+        float x = self.p1.x + ( self.p1.x - self.p2.x ) / self.weight * length;
+        float y = self.p1.y + ( self.p1.y - self.p2.y ) / self.weight * length;
+        self.p1 = CGPointMake(x, y);
+    } else {
+        float x = self.p2.x + ( self.p2.x - self.p1.x ) / self.weight * length;
+        float y = self.p2.y + ( self.p2.y - self.p1.y ) / self.weight * length;
+        self.p2 = CGPointMake(x, y);
+    }
+        
+    
 }
 
 @end

@@ -40,6 +40,7 @@
 		D2CA307A1DE85B20001B87F0 /* model.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2CA30781DE85B20001B87F0 /* model.vsh */; };
 		D2D615261DCF74B100E9C726 /* plane.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615251DCF74B100E9C726 /* plane.vsh */; };
 		D2D615281DCF74FF00E9C726 /* plane.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D615271DCF74FF00E9C726 /* plane.fsh */; };
+		D2DF78131E4994B900431288 /* RoomExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DF78121E4994B900431288 /* RoomExtractor.m */; };
 		D2E079FB1DCF30B5002C38E1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */; };
 		D2E079FD1DCF3111002C38E1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E079FC1DCF3111002C38E1 /* GLKit.framework */; };
 		D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E079FE1DCF46CF002C38E1 /* Renderable.swift */; };
@@ -93,6 +94,8 @@
 		D2CA30781DE85B20001B87F0 /* model.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = model.vsh; sourceTree = "<group>"; };
 		D2D615251DCF74B100E9C726 /* plane.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vsh; sourceTree = "<group>"; };
 		D2D615271DCF74FF00E9C726 /* plane.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.fsh; sourceTree = "<group>"; };
+		D2DF78111E4994AE00431288 /* RoomExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomExtractor.h; sourceTree = "<group>"; };
+		D2DF78121E4994B900431288 /* RoomExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomExtractor.m; sourceTree = "<group>"; };
 		D2E079FA1DCF30B4002C38E1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2E079FC1DCF3111002C38E1 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D2E079FE1DCF46CF002C38E1 /* Renderable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 				D2B2D7A21E473DE500E06D7B /* HoughClassifier.h */,
 				D2B2D7A31E47446B00E06D7B /* VanishingPointDetector.h */,
 				D2B2D7A41E47447A00E06D7B /* VanishingPointDetector.m */,
+				D2DF78111E4994AE00431288 /* RoomExtractor.h */,
+				D2DF78121E4994B900431288 /* RoomExtractor.m */,
 			);
 			name = OpenCV;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2E079FF1DCF46CF002C38E1 /* Renderable.swift in Sources */,
+				D2DF78131E4994B900431288 /* RoomExtractor.m in Sources */,
 				CD243B3D1DD9B81D0083FFC7 /* ModelObject.swift in Sources */,
 				D2B2D7A51E47447A00E06D7B /* VanishingPointDetector.m in Sources */,
 				D24868EE1DCF6A2900F74375 /* GLHelper.swift in Sources */,

@@ -17,7 +17,7 @@
 
 -(id) initWithHoughLines: (NSArray *) lines;
 -(void) intersectionLookup;
--(CGPoint) findIntersectionBetweenLine1: (HoughLine *) v1 andLine2: (HoughLine *) v2;
++(CGPoint) findIntersectionBetweenLine1: (HoughLine *) v1 andLine2: (HoughLine *) v2;
 @end
 
 

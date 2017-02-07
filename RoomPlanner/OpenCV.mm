@@ -11,6 +11,7 @@
 #import <opencv2/imgcodecs/ios.h>
 #import <GLKit/GLKit.h>
 #import "VanishingPointDetector.h"
+#import "RoomExtractor.h"
 
 @implementation OpenCV
 
@@ -141,7 +142,6 @@ static GLuint textureId;
     
     cv::Mat org, source;
     UIImageToMat(src, org);
-    
     cv::Mat cvt = [self toGreyScale:src];
     std::vector<cv::Vec4i> lines;
     
@@ -174,7 +174,7 @@ static GLuint textureId;
         [houghLines addObject:e];
         
         cv::line( org, cv::Point(lines[i][0], lines[i][1]),
-                 cv::Point(lines[i][2], lines[i][3]), colors[e.type], 4, CV_FILLED );
+                 cv::Point(lines[i][2], lines[i][3]), colors[e.type], 2, CV_FILLED );
         
     }
     
@@ -189,8 +189,36 @@ static GLuint textureId;
         
         if(p.vanishingPoints[i] != [NSNull null]) {
             CGPoint point = ((NSValue *)p.vanishingPoints[i]).CGPointValue;
-            cv::circle(org, cv::Point(point.x, point.y), 2, colors[i], 15, CV_FILLED);
+            cv::circle(org, cv::Point(point.x, point.y), 5, colors[i], CV_FILLED);
         }
+    }
+    
+    NSMutableDictionary *surfaces = nil;
+    if(p.vanishingPoints[kDiagonal] != [NSNull null]) {
+        RoomExtractor *roomEx = [[RoomExtractor alloc] initWithVanishingPoints:p.vanishingPoints andHoughLines:p.classifiedHoughLines];
+        [roomEx extractRoom];
+        surfaces = roomEx.surfaces;
+    }
+    
+    if(surfaces) {
+        RoomSurface *ground = [surfaces objectForKey:@"ground"];
+        if ([ground isKindOfClass:[RoomSurface class]]) {
+            cv::Point surface[4];
+            surface[0] = cv::Point(ground.topLeft.x, ground.topLeft.y);
+            surface[1] = cv::Point(ground.bottomLeft.x, ground.bottomLeft.y);
+            surface[2] = cv::Point(ground.bottomRight.x, ground.bottomRight.y);
+            surface[3] = cv::Point(ground.topRight.x, ground.topRight.y);
+            
+            int n[] = {4};
+            const cv::Point* points[1] = {surface};
+            cv::fillPoly(org, points, n, 1, colors[2]);
+            cv::circle(org, surface[0], 30, cv::Scalar(255,255,0));
+            cv::circle(org, surface[1], 30, cv::Scalar(255,0,255));
+            cv::circle(org, surface[2], 30, cv::Scalar(255,0,255));
+            cv::circle(org, surface[3], 30, cv::Scalar(255,255,0));
+            
+        }
+    
     }
     
     if(glContext != nil && draw)

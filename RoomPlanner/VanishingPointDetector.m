@@ -49,7 +49,7 @@
             idx++;
             
             for (HoughLine *lineB in toSearch) {
-                CGPoint p = [self findIntersectionBetweenLine1:lineA andLine2:lineB];
+                CGPoint p = [VanishingPointDetector findIntersectionBetweenLine1:lineA andLine2:lineB];
                 
                 if ( p.x != -1 && p.y != -1) {
                     CGFloat dx = p.x - lineA.p1.x;
@@ -101,7 +101,7 @@
     NSLog(@"VanishingPoint %@", vanishingPoints);
 }
 
--(CGPoint)findIntersectionBetweenLine1:(HoughLine *)v1 andLine2:(HoughLine*)v2 {
++(CGPoint)findIntersectionBetweenLine1:(HoughLine *)v1 andLine2:(HoughLine*)v2 {
     CGFloat xA = v1.p1.x - v1.p2.x;
     CGFloat xB = v2.p1.x - v2.p2.x;
     CGFloat yA = v1.p1.y - v1.p2.y;
