@@ -23,6 +23,7 @@ class RenderView : GLKView, GLKViewDelegate {
             
         }
     }
+
     var manager:CMMotionManager?
     
     required init?(coder aDecoder: NSCoder) {
@@ -68,9 +69,6 @@ class RenderView : GLKView, GLKViewDelegate {
         pos.scale(by: stageScaleFactor)
         pos.translate(by: Vec3(v:(0, 0, -10)))
         stage = Plane(pos: pos)
-        
-        
-        
     }
     
     public func glkView(_ view: GLKView, drawIn rect: CGRect) {
@@ -91,18 +89,25 @@ class RenderView : GLKView, GLKViewDelegate {
                             destMatrix: self.cam)
             
             self.cam.rotate(with: q)
-    
         }
         
         furniture?.render(projection: self.perspective, view: self.cam)
         stage?.render(projection: self.perspective, view: self.stageCam)
+        
+        let pos = Mat4.Identity()
+        pos.scale(by: Vec4(v:(1, 1280 / 720, 1, 1)))
+        pos.rotateAroundX(byAngle: Float(90.degreesToRadians))
+        pos.translate(by: Vec3(v:(0, -0.5, 0)))
+        
+        let floor = Plane(pos: pos)
+        floor.render(projection: self.perspective, view: self.cam)
+
         
         if debugFeature != nil {
             debugFeature!.render(projection: self.perspective, view: self.stageCam)
         }
     }
 
-    
     public func updateTexture(id: GLuint) {
         stage?.texture = id
     }
@@ -116,7 +121,4 @@ class RenderView : GLKView, GLKViewDelegate {
         
         furniture = Furniture(pos: oldPos, path: path)
     }
-    
-    
-    
 }

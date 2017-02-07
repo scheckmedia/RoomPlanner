@@ -41,7 +41,7 @@
     NSMutableArray *vanishingPoints = [NSMutableArray new];
     for(int i = 0; i < 3; i++) {
         [vanishingPoints insertObject:[NSNull null] atIndex:i];
-        NSMutableDictionary<NSString *, NSNumber *> *intersections = [NSMutableDictionary new];
+        NSMutableDictionary<NSString *, NSArray *> *intersections = [NSMutableDictionary new];
         NSMutableArray *lines = [self.classifiedHoughLines objectAtIndex:i];
         int idx = 0;
         for(HoughLine *lineA in lines) {
@@ -59,9 +59,13 @@
                     if(cross == 0 )
                         continue;
                     
+                    // Array mit [intersection_number, leg_point_1, leg_point_2]
+                    NSArray *valueArray = [NSArray arrayWithObjects:[NSNumber numberWithDouble: 0.0], [NSString stringWithFormat:@"%d, %d", (int)lineA.p1.x, (int)lineA.p1.y], [NSString stringWithFormat:@"%d, %d", (int)lineB.p1.x, (int)lineB.p1.y], nil];
+                    
                     NSString *key = [NSString stringWithFormat:@"%d, %d", (int)p.x, (int)p.y];
+                    
                     if([intersections objectForKey:key] == nil)
-                        [intersections setObject:[NSNumber numberWithDouble:0.0] forKey:key];
+                        [intersections setObject:valueArray forKey:key];
                     
                     
                     CGPoint midA = [lineA mid];
@@ -70,9 +74,13 @@
                     dy = midA.y - midB.y;
                     CGFloat angle = RADIANS_TO_DEGREES(atan2(dy, dx));
                     
-                    double v = [[intersections objectForKey:key] doubleValue];
+                    NSArray *extractedValueArray = [intersections objectForKey:key];
+                    double v = [extractedValueArray[0] doubleValue];
                     v += w1 * (1 - (angle / threashold)) + w2 * (lineB.weight / maxLine);
-                    [intersections setObject:[NSNumber numberWithDouble:v] forKey:key];
+
+                    NSArray *newValueArray = [NSArray arrayWithObjects:[NSNumber numberWithDouble: v], [NSString stringWithFormat:@"%d, %d", (int)lineA.p1.x, (int)lineA.p1.y], [NSString stringWithFormat:@"%d, %d", (int)lineB.p1.x, (int)lineB.p1.y], nil];
+
+                    [intersections setObject:newValueArray forKey:key];
                 }
                     
             }
@@ -85,8 +93,10 @@
                 NSArray *p = [key componentsSeparatedByString:@","];
                 CGPoint vanishingPoint = CGPointMake([p[0] doubleValue], [p[1] doubleValue]);
                 
-                double val = [[intersections objectForKey:key] doubleValue];
-                if ( val > best) {
+                NSArray *extractedValueArray = [intersections objectForKey:key];
+                double val = [extractedValueArray[0] doubleValue];
+
+                if (val > best) {
                     [vanishingPoints replaceObjectAtIndex:i withObject:[NSValue valueWithCGPoint:vanishingPoint]];
                     
                     best = val;
