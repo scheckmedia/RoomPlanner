@@ -305,7 +305,7 @@
 				TargetAttributes = {
 					27AF3D1F1DCCD4B4005A727A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = J7A78EAU6M;
+						DevelopmentTeam = Z8N87V8JEC;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -555,7 +555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = J7A78EAU6M;
+				DEVELOPMENT_TEAM = Z8N87V8JEC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
@@ -563,7 +563,7 @@
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanners;
+				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlannersFelix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -580,7 +580,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = J7A78EAU6M;
+				DEVELOPMENT_TEAM = Z8N87V8JEC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/OpenCV",
@@ -588,7 +588,7 @@
 				INFOPLIST_FILE = RoomPlanner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlanners;
+				PRODUCT_BUNDLE_IDENTIFIER = HTW.AR.RoomPlannersFelix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RoomPlanner/RoomPlanner-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
